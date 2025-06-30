@@ -1,0 +1,19 @@
+<section class="text-gray-600 body-font overflow-hidden border-b">
+  <h1 class="text-3xl font-medium title-font text-gray-900 mb-16 text-center">
+    Posts
+  </h1>
+  <div class="container px-5 py-5 mx-auto">
+    <div class="-my-8 divide-y-2 divide-gray-100">
+      @for (post of posts; track post.id) { 
+        @if (post.id < 43) {
+        <app-news-block [post]="post" class="py-8 flex flex-wrap md:flex-nowrap odd:bg-gray-100"></app-news-block>
+        }
+      }
+    </div>
+  </div>
+</section>
+<div class="w-full inline-flex justify-center mx-auto lg:ml-0 mt-10">
+  <a routerLink="/posts">
+    <app-button [name]="newsButtonTitle"></app-button>
+  </a>
+</div>

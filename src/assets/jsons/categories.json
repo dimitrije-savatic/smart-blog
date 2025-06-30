@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Sport"
+    },
+    {
+        "id": 2,
+        "name": "Zivot"
+    },
+    {
+        "id": 3,
+        "name": "Zdravlje"
+    },
+    {
+        "id": 4,
+        "name": "Pozoriste"
+    },
+    {
+        "id": 5,
+        "name": "Ljubav"
+    },
+    {
+        "id": 6,
+        "name": "Film"
+    }
+]

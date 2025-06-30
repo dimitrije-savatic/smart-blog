@@ -1,0 +1,103 @@
+<section class="text-gray-600 body-font">
+  <div
+    class="container py-12 mx-auto flex flex-col h-full items-center justify-around"
+  >
+    <div
+      class="md:w-2/5 bg-gray-100 p-8 flex flex-col w-full mt-10 mb-14 md:mt-0"
+    >
+      <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
+        Create Post
+      </h2>
+      <form [formGroup]="formCreatePost">
+        <div class="relative mb-4">
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Title</mat-label>
+            <input matInput [formControl]="formCreatePost.get('title')" />
+            <mat-error *ngIf="formCreatePost.get('title').hasError('required')">
+              Title is required.
+            </mat-error>
+            <mat-error *ngIf="formCreatePost.get('title').hasError('minlength')">
+              Title has to be at least 5 characters long.
+            </mat-error>
+            <mat-error *ngIf="formCreatePost.get('title').hasError('maxlength')">
+              Title could not be more than 100 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="relative mb-4">
+          <mat-form-field style="width: 100%">
+            <mat-label>Content</mat-label>
+            <textarea
+              matInput
+              [formControl]="formCreatePost.get('body')"
+              style="max-height: 6rem; min-height: 3rem"
+            ></textarea>
+            <mat-error *ngIf="formCreatePost.get('body').hasError('required')">
+              Content is required.
+            </mat-error>
+            <mat-error *ngIf="formCreatePost.get('body').hasError('minlength')">
+              Content has to be at least 10 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="relative mb-4">
+          @for (cat of categories; track cat.id) {
+          <mat-checkbox
+            color="primary"
+            [formControl]="formCreatePost.get('category')"
+            >{{cat.name | capitalize}}</mat-checkbox
+          >
+          }
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          style="width: 100%"
+          (click)="
+            createPost(
+              formCreatePost.get('title').value,
+              formCreatePost.get('body').value,
+              userId
+            )
+          "
+          [disabled]="formCreatePost.invalid"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+    <div class="md:w-2/5 bg-gray-100 p-8 flex flex-col w-full mt-10 md:mt-0">
+      <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
+        Create Category
+      </h2>
+      <form [formGroup]="formCreateCategory">
+        <div class="relative mb-4">
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Name</mat-label>
+            <input matInput [formControl]="formCreateCategory.get('name')" />
+            <mat-error *ngIf="formCreateCategory.get('name').hasError('required')">
+              Name is required.
+            </mat-error>
+            <mat-error *ngIf="formCreateCategory.get('name').hasError('minlength')">
+              Name has to be at least 5 characters long.
+            </mat-error>
+            <mat-error *ngIf="formCreateCategory.get('name').hasError('maxlength')">
+              Name could not be more than 100 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          style="width: 100%"
+          (click)="createCategory(formCreateCategory.get('name').value)"
+          [disabled]="formCreateCategory.invalid"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+  <app-notification-modal *ngIf="error" [newLocation]="location" [body]="bodyError" [notification]="notificationError" [borderColor]="borderColorError" [buttonColor]="buttonColorError"></app-notification-modal>
+  <app-notification-modal *ngIf="success" [newLocation]="location" [body]="bodySuccess" [notification]="notificationSuccess" [borderColor]="borderColorSuccess" [buttonColor]="buttonColorSuccess"></app-notification-modal>
+</section>

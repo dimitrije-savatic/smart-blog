@@ -1,0 +1,21 @@
+<section class="text-gray-600 body-font overflow-hidden my-20">
+  <div class="container px-5 py-5 mx-auto">
+    <div class="-my-8 mb-5 divide-y-2 divide-gray-100">
+      @for (post of paginatedPosts; track $index) {
+      <app-posts-block
+        [post]="post"
+        class="py-8 flex flex-wrap md:flex-nowrap even:bg-gray-100"
+      ></app-posts-block>
+      }
+    </div>
+    <mat-paginator
+      #paginator
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      [length]="posts.length"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+</section>
