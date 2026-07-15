@@ -1,0 +1,66 @@
+<section class="text-gray-600 body-font h-screen">
+  <div
+    class="container py-12 mx-auto flex flex-col h-full items-center justify-around"
+  >
+    <div
+      class="md:w-2/5 bg-gray-100 p-8 flex flex-col w-full mt-10 mb-14 md:mt-0"
+    >
+      <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
+        Edit Post
+      </h2>
+      <form [formGroup]="formEditPost">
+        <div class="relative mb-4">
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" />
+            <mat-error *ngIf="formEditPost.get('title').hasError('required')">
+              Title is required.
+            </mat-error>
+            <mat-error *ngIf="formEditPost.get('title').hasError('minLength')">
+              Title has to be at least 5 characters long.
+            </mat-error>
+            <mat-error *ngIf="formEditPost.get('title').hasError('maxLength')">
+              Title could not be more than 100 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="relative mb-4">
+          <mat-form-field style="width: 100%">
+            <mat-label>Content</mat-label>
+            <textarea
+              matInput
+              formControlName="body"
+              style="max-height: 6rem; min-height: 3rem"
+            ></textarea>
+            <mat-error *ngIf="formEditPost.get('body').hasError('required')">
+              Content is required.
+            </mat-error>
+            <mat-error *ngIf="formEditPost.get('body').hasError('minLength')">
+              Content has to be at least 10 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="relative mb-4">
+          @for (cat of categories; track cat.id) {
+          <mat-checkbox
+            color="primary"
+            [formControl]="formEditPost.get('category')"
+            >{{cat.name}}</mat-checkbox
+          >
+          }
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          style="width: 100%"
+          (click)="updatePost(post.id, formEditPost.get('title').value, formEditPost.get('body').value, post.user_id)"
+          [disabled]="formEditPost.invalid"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+  <app-notification-modal *ngIf="error" [newLocation]="location" [body]="bodyError" [notification]="notificationError" [borderColor]="borderColorError" [buttonColor]="buttonColorError"></app-notification-modal>
+  <app-notification-modal *ngIf="success" [newLocation]="location" [body]="bodySuccess" [notification]="notificationSuccess" [borderColor]="borderColorSuccess" [buttonColor]="buttonColorSuccess"></app-notification-modal>
+</section>

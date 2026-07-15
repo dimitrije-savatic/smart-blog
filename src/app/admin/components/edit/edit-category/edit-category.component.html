@@ -1,0 +1,42 @@
+<section class="text-gray-600 body-font h-screen">
+  <div
+    class="container py-12 mx-auto flex flex-col h-full items-center justify-around"
+  >
+    <div class="md:w-2/5 bg-gray-100 p-8 flex flex-col w-full mt-10 md:mt-0">
+      <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
+        Edit Category
+      </h2>
+      <form [formGroup]="formEditCategory">
+        <div class="relative mb-4">
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Name</mat-label>
+            <input matInput [formControl]="formEditCategory.get('name')" />
+            <mat-error *ngIf="formEditCategory.get('name').hasError('unchanged')">
+              The value has not changed.
+            </mat-error>
+            <mat-error *ngIf="formEditCategory.get('name').hasError('required')">
+              Name is required.
+            </mat-error>
+            <mat-error *ngIf="formEditCategory.get('name')?.hasError('minlength')">
+              Name has to be at least 3 characters long.
+            </mat-error>
+            <mat-error *ngIf="formEditCategory.get('name')?.hasError('maxlength')">
+              Name could not be more than 30 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          style="width: 100%"
+          (click)="updateCategory(category.id, formEditCategory.get('name').value)"
+          [disabled]="formEditCategory.invalid"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+  </div>
+  <app-notification-modal *ngIf="error" [newLocation]="location" [body]="bodyError" [notification]="notificationError" [borderColor]="borderColorError" [buttonColor]="buttonColorError"></app-notification-modal>
+  <app-notification-modal *ngIf="success" [newLocation]="location" [body]="bodySuccess" [notification]="notificationSuccess" [borderColor]="borderColorSuccess" [buttonColor]="buttonColorSuccess"></app-notification-modal>
+</section>
