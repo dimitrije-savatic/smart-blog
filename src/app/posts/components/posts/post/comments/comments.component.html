@@ -1,30 +1,28 @@
-<section *ngIf="comments.length > 0" class="text-gray-600 body-font relative border-t">
+<section *ngIf="post?.comments.length > 0" class="text-gray-600 body-font relative border-t">
   <div class="container px-5 py-12 mx-auto">
     <div class="flex flex-col text-center w-full mb-12">
-      <h1
-        class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900"
-      >
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
         Comments
       </h1>
     </div>
     <div class="lg:w-full md:w-2/3 mx-auto">
-      
-        @for (com of comments; track com.id) { @if (com.post_id == postId) {
-        <div
-          class="sm:w-2/3 w-full sm:pl-8 sm:py-8 bg-gray-200 even:bg-gray-100 sm:mt-0 text-center sm:text-left mx-auto mb-4 rounded-lg "
-        >
+
+      @for (com of post?.comments; track com.id){
+      <div
+        class="sm:w-2/3 w-full sm:pl-8 sm:py-8 bg-gray-200 even:bg-gray-100 sm:mt-0 text-center sm:text-left mx-auto mb-4 rounded-lg ">
         <div class="flex">
-        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-8 h-8 mr-2 bg-white rounded-full" viewBox="0 0 24 24">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            class="w-8 h-8 mr-2 bg-white rounded-full" viewBox="0 0 24 24">
             <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
           </svg>
           <h4 class="font-medium title-font mt-1 text-gray-900 text-lg mb-4">
-            {{com.first_name + ' ' + com.last_name}}
+            {{com?.user.first_name + ' ' + com?.user.last_name}}
           </h4>
         </div>
-          <p class="leading-relaxed text-md mb-1 ml-10">{{com.body}}</p>
-        </div>
-        } }
+        <p class="leading-relaxed text-md mb-1 ml-10">{{com?.body}}</p>
       </div>
+      }
+    </div>
   </div>
 </section>

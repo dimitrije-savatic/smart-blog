@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ReactionsService } from '../../../../../services/reactions.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,23 +9,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CommentsComponent implements OnInit {
 
-  comments: any[] = []
+  @Input() post: any;
   postId = this.activatedRoute.snapshot.paramMap.get('id')
 
-  constructor(private reactionsService: ReactionsService, private activatedRoute: ActivatedRoute) {}
+  constructor(private reactionsService: ReactionsService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getComments(Number(this.postId));
-  }
-
-  getComments(id: number): void{
-    this.reactionsService.getCommentsByPost(id).subscribe({
-      next: (data) =>{
-        this.comments = data;
-      }, 
-      error: (err)=>{
-        console.error(err);
-      }
-    })
   }
 }

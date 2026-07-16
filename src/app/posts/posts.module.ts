@@ -14,7 +14,7 @@ import { CommentsComponent } from './components/posts/post/comments/comments.com
     SinglePostComponent,
     PostsBlockComponent,
     CommentInputComponent,
-    CommentsComponent
+    CommentsComponent,
   ],
   imports: [
     CommonModule,
