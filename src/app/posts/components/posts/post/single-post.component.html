@@ -33,7 +33,7 @@
           </h2>
           <p class="leading-relaxed text-lg mb-4">{{ post?.body }}</p>
           <div class="mt-5 py-2 flex">
-            <p class="mr-1">{{ post?.reaction_counts?.like }}</p>
+            <p class="mr-1">{{ post?.reaction_counts?.like ?? 0}}</p>
             <svg xmlns="http://www.w3.org/2000/svg" [attr.fill]="isReacted ? 'currentColor' : 'none'"
               viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
               class="size-6 mr-4 cursor-pointer text-green-600"

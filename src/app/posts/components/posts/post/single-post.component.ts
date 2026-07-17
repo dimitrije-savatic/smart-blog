@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostsApiService } from '../../../../services/post.service';
-import { UserService } from '../../../../services/user.service';
 import { ReactionsService } from '../../../../services/reactions.service';
 import { IReaction } from '../../../../interfaces/i-reaction';
 

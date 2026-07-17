@@ -11,13 +11,13 @@ export class PostsComponent implements OnInit {
 
   posts: any[] = [];
   paginatedPosts: any[] = [];
-  public pageSize = 10;
+  public pageSize = 12;
   public currentPage = 0;
 
   buttonTitle: string = 'View All';
 
 
-  constructor(private postsService: PostsApiService) {}
+  constructor(private postsService: PostsApiService) { }
 
   ngOnInit() {
     this.getPosts();
@@ -36,13 +36,13 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  onPageChange(event: PageEvent){
+  onPageChange(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.updatePaginatedItems();
   }
 
-  updatePaginatedItems(){
+  updatePaginatedItems() {
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedPosts = this.posts.slice(startIndex, endIndex);
