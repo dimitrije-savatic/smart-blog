@@ -9,7 +9,7 @@ export class AppComponent {
 
   title = 'blog-app';
 
-  isShow: boolean = false;
+  isShown: boolean = false;
 
   topPositionToStartShowing = 200;
 
@@ -17,7 +17,7 @@ export class AppComponent {
   checkScroll() {
     const scrollPosition = window.scrollY;
 
-    this.isShow = scrollPosition >= this.topPositionToStartShowing;
+    this.isShown = scrollPosition >= this.topPositionToStartShowing;
   }
 
   scrollToTop() {

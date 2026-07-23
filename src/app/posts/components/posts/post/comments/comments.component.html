@@ -7,7 +7,7 @@
     </div>
     <div class="lg:w-full md:w-2/3 mx-auto">
 
-      @for (com of post?.comments; track com.id){
+      @for (com of post?.comments; track com){
       <div
         class="sm:w-2/3 w-full sm:pl-8 sm:py-8 bg-gray-200 even:bg-gray-100 sm:mt-0 text-center sm:text-left mx-auto mb-4 rounded-lg ">
         <div class="flex">
@@ -21,6 +21,46 @@
           </h4>
         </div>
         <p class="leading-relaxed text-md mb-1 ml-10">{{com?.body}}</p>
+        <div class="relative inline-block group">
+
+          <!-- Main reaction button -->
+          <button type="button" class="flex items-center gap-2 rounded-full px-3 py-2
+               text-gray-600 transition
+               hover:bg-gray-100">
+
+            <!-- Current reaction -->
+            <span *ngIf="selectedReaction === 'like'">👍</span>
+            <span *ngIf="selectedReaction === 'love'">❤️</span>
+            <span *ngIf="selectedReaction === 'haha'">😂</span>
+            <span *ngIf="selectedReaction === 'wow'">😮</span>
+            <span *ngIf="selectedReaction === 'sad'">😢</span>
+            <span *ngIf="selectedReaction === 'fire'">🔥</span>
+
+            <span>
+              {{ selectedReaction ? selectedReaction : 'Like' }}
+            </span>
+          </button>
+
+
+          <!-- Reaction picker -->
+          <div class="absolute bottom-full left-0 mb-2
+               flex gap-2 rounded-full bg-white p-2 shadow-lg
+               opacity-0 invisible scale-95
+               transition-all duration-200
+               group-hover:opacity-100
+               group-hover:visible
+               group-hover:scale-100">
+
+            <button *ngFor="let reaction of reactionTypes" type="button" (click)="selectReaction(reaction.type)" class="text-2xl transition-transform duration-200
+                   hover:scale-125">
+
+              {{ reaction.icon }}
+
+            </button>
+
+          </div>
+
+        </div>
       </div>
       }
     </div>

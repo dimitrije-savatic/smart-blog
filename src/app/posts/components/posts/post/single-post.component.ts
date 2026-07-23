@@ -15,8 +15,6 @@ export class SinglePostComponent implements OnInit {
   userFromLocalStorage: any = localStorage.getItem('user');
   parsedUser: any = JSON.parse(this.userFromLocalStorage);
   categories: any;
-  reactions: IReaction[] = [];
-  isReacted: boolean = false;
 
   constructor(
     private postsApiService: PostsApiService,
@@ -32,7 +30,6 @@ export class SinglePostComponent implements OnInit {
     this.postsApiService.getSinglePost(id).subscribe({
       next: (data) => {
         this.post = data;
-        this.post.reaction_counts.like > 0 ? (this.isReacted = true) : (this.isReacted = false);
       },
       error: (err) => {
         console.log(err);

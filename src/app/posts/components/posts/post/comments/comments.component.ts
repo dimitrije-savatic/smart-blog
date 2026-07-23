@@ -14,6 +14,34 @@ export class CommentsComponent implements OnInit {
 
   constructor(private reactionsService: ReactionsService, private activatedRoute: ActivatedRoute) { }
 
+
+
   ngOnInit(): void {
+  }
+
+  reactionTypes = [
+    { type: 'like', icon: '👍' },
+    { type: 'love', icon: '❤️' },
+    { type: 'haha', icon: '😂' },
+    { type: 'wow', icon: '😮' },
+    { type: 'sad', icon: '😢' },
+    { type: 'fire', icon: '🔥' },
+  ];
+
+  selectedReaction: string | null = null;
+
+  selectReaction(type: string): void {
+
+    if (this.selectedReaction === type) {
+      // Remove reaction
+      this.selectedReaction = null;
+      // call API to remove reaction
+      return;
+    }
+
+    // Add/change reaction
+    this.selectedReaction = type;
+
+    // call API
   }
 }
