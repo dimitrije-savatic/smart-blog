@@ -8,57 +8,75 @@
     <div class="lg:w-full md:w-2/3 mx-auto">
 
       @for (com of post?.comments; track com){
-      <div
-        class="sm:w-2/3 w-full sm:pl-8 sm:py-8 bg-gray-200 even:bg-gray-100 sm:mt-0 text-center sm:text-left mx-auto mb-4 rounded-lg ">
-        <div class="flex">
-          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            class="w-8 h-8 mr-2 bg-white rounded-full" viewBox="0 0 24 24">
-            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          <h4 class="font-medium title-font mt-1 text-gray-900 text-lg mb-4">
-            {{com?.user.first_name + ' ' + com?.user.last_name}}
-          </h4>
-        </div>
-        <p class="leading-relaxed text-md mb-1 ml-10">{{com?.body}}</p>
-        <div class="relative inline-block group">
-
-          <!-- Main reaction button -->
-          <button type="button" class="flex items-center gap-2 rounded-full px-3 py-2
-               text-gray-600 transition
-               hover:bg-gray-100">
-
-            <!-- Current reaction -->
-            <span *ngIf="selectedReaction === 'like'">👍</span>
-            <span *ngIf="selectedReaction === 'love'">❤️</span>
-            <span *ngIf="selectedReaction === 'haha'">😂</span>
-            <span *ngIf="selectedReaction === 'wow'">😮</span>
-            <span *ngIf="selectedReaction === 'sad'">😢</span>
-            <span *ngIf="selectedReaction === 'fire'">🔥</span>
-
-            <span>
-              {{ selectedReaction ? selectedReaction : 'Like' }}
-            </span>
-          </button>
-
-
-          <!-- Reaction picker -->
-          <div class="absolute bottom-full left-0 mb-2
-               flex gap-2 rounded-full bg-white p-2 shadow-lg
-               opacity-0 invisible scale-95
-               transition-all duration-200
-               group-hover:opacity-100
-               group-hover:visible
-               group-hover:scale-100">
-
-            <button *ngFor="let reaction of reactionTypes" type="button" (click)="selectReaction(reaction.type)" class="text-2xl transition-transform duration-200
-                   hover:scale-125">
-
-              {{ reaction.icon }}
-
-            </button>
-
+      <div class="flex gap-3 p-4 border-b border-green-200">
+        <!-- User Icon -->
+        <div class="flex-shrink-0">
+          <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+            <!-- User icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6 text-gray-500">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
+            </svg>
           </div>
+        </div>
+
+        <!-- Comment Content -->
+        <div class="flex-1 min-w-0">
+
+          <!-- Header -->
+          <div class="flex items-center justify-between">
+
+            <!-- Username -->
+            <span class="font-semibold text-gray-900">
+              {{com.user?.first_name + ' ' + com.user?.last_name}}
+            </span>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-2">
+
+              <!-- Heart Reaction -->
+              <button type="button"
+                class="p-1.5 rounded-full text-gray-500 hover:text-red-500 hover:bg-red-50 transition block"
+                title="React">
+                <ng-icon [name]="com?.users_reaction ? 'heroHeartSolid' : 'heroHeart'"
+                  class="cursor-pointer text-red-700" size="24"
+                  (click)="addReaction(com?.id, parsedUser?.id, 'comment', 'heart')"></ng-icon>
+              </button>
+
+              <!-- Three Dots Menu -->
+              <div class="relative">
+
+                <button type="button" class="p-1.5 rounded-full text-gray-500 hover:bg-gray-100 transition"
+                  title="More options" (click)="toggleMenu(com.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
+                    <path
+                      d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2Zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2Zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2Z" />
+                  </svg>
+                </button>
+
+                <!-- Dropdown -->
+                <div *ngIf="activeMenuCommentId"
+                  class="absolute right-0 top-9 z-10 w-32 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                  <button type="button"
+                    class="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 transition">
+                    Edit
+                  </button>
+
+                  <button type="button"
+                    class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition">
+                    Delete
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Comment Text -->
+          <p class="mt-1 text-gray-700 leading-relaxed">
+            {{com.body}}
+          </p>
 
         </div>
       </div>

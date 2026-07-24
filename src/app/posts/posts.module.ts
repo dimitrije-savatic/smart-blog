@@ -7,6 +7,9 @@ import { CommentInputComponent } from './components/posts/post/comment-input-for
 import { SinglePostComponent } from './components/posts/post/single-post.component';
 import { SharedModule } from '../shared/shared.module';
 import { CommentsComponent } from './components/posts/post/comments/comments.component';
+import { NgIconsModule } from '@ng-icons/core';
+import { heroFaceFrown, heroFaceSmile, heroFire, heroHandThumbUp, heroHeart } from '@ng-icons/heroicons/outline';
+import { heroFaceFrownSolid, heroFaceSmileSolid, heroFireSolid, heroHandThumbUpSolid, heroHeartSolid } from '@ng-icons/heroicons/solid';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,19 @@ import { CommentsComponent } from './components/posts/post/comments/comments.com
   imports: [
     CommonModule,
     PostsRoutingModule,
-    SharedModule
+    SharedModule,
+    NgIconsModule.withIcons({
+      heroFaceSmile,
+      heroFaceSmileSolid,
+      heroHandThumbUp,
+      heroHandThumbUpSolid,
+      heroFire,
+      heroFireSolid,
+      heroFaceFrown,
+      heroFaceFrownSolid,
+      heroHeart,
+      heroHeartSolid
+    })
   ]
 })
 export class PostsModule { }

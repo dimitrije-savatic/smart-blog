@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^17.3.12",
     "@angular/platform-browser-dynamic": "^17.3.12",
     "@angular/router": "^17.3.12",
+    "@ng-icons/core": "^26.5.0",
+    "@ng-icons/heroicons": "^26.5.0",
     "chart.js": "^4.4.3",
     "rxjs": "~7.8.0",
     "save": "^2.9.0",

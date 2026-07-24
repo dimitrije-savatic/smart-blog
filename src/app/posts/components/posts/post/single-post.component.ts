@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostsApiService } from '../../../../services/post.service';
 import { ReactionsService } from '../../../../services/reactions.service';
-import { IReaction } from '../../../../interfaces/i-reaction';
 
 @Component({
   selector: 'app-single-post',
@@ -15,6 +14,8 @@ export class SinglePostComponent implements OnInit {
   userFromLocalStorage: any = localStorage.getItem('user');
   parsedUser: any = JSON.parse(this.userFromLocalStorage);
   categories: any;
+  users_reaction: any;
+  currentReaction: string | null = null;
 
   constructor(
     private postsApiService: PostsApiService,
@@ -30,6 +31,18 @@ export class SinglePostComponent implements OnInit {
     this.postsApiService.getSinglePost(id).subscribe({
       next: (data) => {
         this.post = data;
+        this.users_reaction = this.post.users_reaction;
+        if (this.users_reaction?.like) {
+          this.currentReaction = 'like'
+        } else if (this.users_reaction.heart) {
+          this.currentReaction = 'heart'
+        } else if (this.users_reaction.happy) {
+          this.currentReaction = 'happy'
+        } else if (this.users_reaction.sad) {
+          this.currentReaction = 'sad'
+        } else {
+          this.currentReaction = 'fire'
+        }
       },
       error: (err) => {
         console.log(err);
@@ -46,6 +59,10 @@ export class SinglePostComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  changeReaction(type: string): void {
+    this.currentReaction = type;
   }
 
 }

@@ -1,47 +1,55 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReactionsService } from '../../../../../services/reactions.service';
 import { ActivatedRoute } from '@angular/router';
+import { PostsApiService } from '../../../../../services/post.service';
 
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent {
 
   @Input() post: any;
   postId = this.activatedRoute.snapshot.paramMap.get('id')
+  userFromLocalStorage: any = localStorage.getItem('user');
+  parsedUser: any = JSON.parse(this.userFromLocalStorage);
+  activeMenuCommentId: number | null = null;
+  reaction: any;
 
-  constructor(private reactionsService: ReactionsService, private activatedRoute: ActivatedRoute) { }
+  constructor(private reactionsService: ReactionsService, private postsApiService: PostsApiService, private activatedRoute: ActivatedRoute) { }
 
-
-
-  ngOnInit(): void {
+  addReaction(reactable_id: number, user_id: number, reactable_type: string, type: string): void {
+    this.reactionsService.addReaction({ reactable_id, user_id, reactable_type, type }).subscribe({
+      next: (data) => {
+        this.reaction = data;
+        this.getPost(Number(this.postId))
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 
-  reactionTypes = [
-    { type: 'like', icon: '👍' },
-    { type: 'love', icon: '❤️' },
-    { type: 'haha', icon: '😂' },
-    { type: 'wow', icon: '😮' },
-    { type: 'sad', icon: '😢' },
-    { type: 'fire', icon: '🔥' },
-  ];
-
-  selectedReaction: string | null = null;
-
-  selectReaction(type: string): void {
-
-    if (this.selectedReaction === type) {
-      // Remove reaction
-      this.selectedReaction = null;
-      // call API to remove reaction
-      return;
+  toggleMenu(commentId: number): void {
+    if (this.activeMenuCommentId === commentId) {
+      // Close the menu if it's already open
+      this.activeMenuCommentId = null;
+    } else {
+      // Open the clicked comment's menu
+      this.activeMenuCommentId = commentId;
     }
-
-    // Add/change reaction
-    this.selectedReaction = type;
-
-    // call API
   }
+
+  getPost(id: number): void {
+    this.postsApiService.getSinglePost(id).subscribe({
+      next: (data) => {
+        this.post = data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
 }
