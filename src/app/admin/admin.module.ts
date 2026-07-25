@@ -6,18 +6,25 @@ import { EditPostComponent } from './components/edit/edit-post/edit-post.compone
 import { SharedModule } from '../shared/shared.module';
 import { CreateComponent } from './components/create/create.component';
 import { EditCategoryComponent } from './components/edit/edit-category/edit-category.component';
+import { NgIconsModule } from '@ng-icons/core';
+import { heroChatBubbleLeftRight, heroHeart, heroUser } from '@ng-icons/heroicons/outline';
 
 @NgModule({
   declarations: [
     AdminComponent,
     EditPostComponent,
     CreateComponent,
-    EditCategoryComponent,
+    EditCategoryComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    SharedModule
+    SharedModule,
+    NgIconsModule.withIcons({
+      heroHeart,
+      heroUser,
+      heroChatBubbleLeftRight
+    })
   ]
 })
 export class AdminModule { }

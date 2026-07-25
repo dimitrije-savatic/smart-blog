@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostsApiService } from '../../../../services/post.service';
 import { ReactionsService } from '../../../../services/reactions.service';
+import { IComment } from '../../../../interfaces/i-comment';
 
 @Component({
   selector: 'app-single-post',
@@ -11,6 +12,7 @@ import { ReactionsService } from '../../../../services/reactions.service';
 export class SinglePostComponent implements OnInit {
   postId: any = this.activatedRoute.snapshot.paramMap.get('id');
   post: any;
+  comments: IComment[] = [];
   userFromLocalStorage: any = localStorage.getItem('user');
   parsedUser: any = JSON.parse(this.userFromLocalStorage);
   categories: any;
@@ -31,6 +33,7 @@ export class SinglePostComponent implements OnInit {
     this.postsApiService.getSinglePost(id).subscribe({
       next: (data) => {
         this.post = data;
+        this.comments = this.post.comments;
         this.users_reaction = this.post.users_reaction;
         if (this.users_reaction?.like) {
           this.currentReaction = 'like'

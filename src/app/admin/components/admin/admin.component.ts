@@ -1,9 +1,11 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnChanges, OnInit, Renderer2 } from '@angular/core';
 import { PostsApiService } from '../../../services/post.service';
 import { UserService } from '../../../services/user.service';
 import { IUser } from '../../../interfaces/i-user';
 import { IPost } from '../../../interfaces/i-post';
 import { LogService } from '../../../services/log.service';
+import { ICategory } from '../../../interfaces/i-category';
+import { ReactionsService } from '../../../services/reactions.service';
 
 @Component({
   selector: 'app-admin',
@@ -15,11 +17,12 @@ export class AdminComponent implements OnInit {
     private logService: LogService,
     private postsApiService: PostsApiService,
     private userService: UserService,
+    private reactionsService: ReactionsService,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   posts: IPost[] = [];
-  categories: any[] = [];
+  categories: ICategory[] = [];
   users: IUser[] = [];
   logs: any[] = [];
 
@@ -28,28 +31,13 @@ export class AdminComponent implements OnInit {
   type: string = '';
   id: number = 0;
 
+  counts: any;
+  statisticsArray: any[] = []
+
   ngOnInit(): void {
     this.getAllData();
+    this.getCounts();
   }
-
-  statistics: any[] = [
-    {
-      name: 'users',
-      count: '45.5',
-    },
-    {
-      name: 'likes',
-      count: '12.3',
-    },
-    {
-      name: 'dislikes',
-      count: '2.7',
-    },
-    {
-      name: 'comments',
-      count: '4.9',
-    },
-  ];
 
   openModal(id: number, type: string, name: string): void {
     this.showModal = !this.showModal;
@@ -100,6 +88,7 @@ export class AdminComponent implements OnInit {
     this.userService.getUsers().subscribe({
       next: (data) => {
         this.users = data;
+
       },
       error: (err) => {
         console.error(err);
@@ -114,5 +103,19 @@ export class AdminComponent implements OnInit {
         console.error(err);
       },
     });
+
   }
+
+  getCounts(): void {
+    this.reactionsService.getCounts().subscribe({
+      next: (data) => {
+        this.counts = data
+        this.statisticsArray = [{ "name": this.counts[0].name, "number": this.counts[0].number, "icon": 'heroUser', "color": "text-emerald-500" }, { "name": this.counts[1].name, "number": this.counts[1].number, "icon": 'heroHeart', "color": "text-red-600" }, { "name": this.counts[2].name, "number": this.counts[2].number, "icon": 'heroChatBubbleLeftRight', "color": "text-indigo-600" }]
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
+  }
+
 }

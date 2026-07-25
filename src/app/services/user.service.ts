@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IUser } from "../interfaces/i-user";
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -46,8 +47,4 @@ export class UserService {
     }
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-  }
 }

@@ -1,9 +1,7 @@
 <section class="text-gray-600 body-font relative border-y">
   <div class="container px-5 py-12 mx-auto">
     <div class="flex flex-col text-center w-full mb-12">
-      <h1
-        class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900"
-      >
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
         Leave a Comment
       </h1>
     </div>
@@ -14,33 +12,33 @@
             <div class="relative">
               <mat-form-field style="width: 100%">
                 <mat-label>Content</mat-label>
-                <textarea
-                  matInput
-                  formControlName="body"
-                  style="max-height: 6rem; min-height: 3rem"
-                ></textarea>
-                <mat-error *ngIf="formCommentGroup.get('body').hasError('required')">
+                <textarea matInput formControlName="body" style="max-height: 6rem; min-height: 3rem"></textarea>
+
+                @if (formCommentGroup.get('body').hasError('required') && formCommentGroup.get('body').dirty) {
+                <mat-error>
                   Content of the comment is required.
                 </mat-error>
-                <mat-error *ngIf="formCommentGroup.get('body').hasError('minlength')">
-                  Comment have to be at least 10 characters long.
+                }
+
+                @if (formCommentGroup.get('body').hasError('minlength') && formCommentGroup.get('body').dirty) {
+                <mat-error>
+                  Comment have to be at least 3 characters long.
                 </mat-error>
-                <mat-error *ngIf="formCommentGroup.get('body').hasError('maxlength')">
+                }
+
+                @if (formCommentGroup.get('body').hasError('maxlength') && formCommentGroup.get('body').dirty) {
+                <mat-error>
                   Comment must not be more than 255 characters long.
                 </mat-error>
+                }
+
               </mat-form-field>
             </div>
           </div>
           <div class="p-2 w-full">
-            <button
-              mat-raised-button
-              color="primary"
-              style="width: 100%"
-              (click)="
+            <button mat-raised-button color="primary" style="width: 100%" (click)="
                 postComment(formCommentGroup.get('body').value, user.id, postId)
-              "
-              [disabled]="formCommentGroup.invalid"
-            >
+              " [disabled]="formCommentGroup.invalid">
               Submit
             </button>
           </div>

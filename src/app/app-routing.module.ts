@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/components/layout/layout.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
+import { AdminLayoutComponent } from './admin/admin-layout/components/admin-layout/admin-layout.component';
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [

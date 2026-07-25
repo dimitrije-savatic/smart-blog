@@ -11,11 +11,11 @@ export class CommentsService {
 
   constructor(private http: HttpClient) { }
 
-  getComments(id: number): Observable<any>{
-    return this.http.get(this.commentsUrl+'/'+id);
+  getCommentsByPostId(postId: number): Observable<any> {
+    return this.http.get(this.commentsUrl + '/' + postId);
   }
 
-  postComment(credentials: {body: string, user_id: any, post_id: any}): Observable<any>{
+  postComment(credentials: { body: string, user_id: any, post_id: any }): Observable<any> {
     return this.http.post(this.commentsUrl, credentials)
   }
 

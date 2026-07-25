@@ -12,6 +12,7 @@ export class ReactionsService {
   commentsUrl = 'http://localhost:8000/api/comments';
   postsUrl = 'http://localhost:8000/api/posts';
   reactionsUrl = 'http://127.0.0.1:8000/api/reactions';
+  countsUrl = 'http://127.0.0.1:8000/api/counts'
 
   constructor(private http: HttpClient) { }
 
@@ -46,6 +47,11 @@ export class ReactionsService {
   }
 
   addReaction(credentials: { user_id: number, reactable_id: number, reactable_type: string, type: string }): Observable<IReaction> {
-    return this.http.post<IReaction>(this.postsUrl + '/' + credentials.reactable_id + '/reactions', credentials);
+    return this.http.post<IReaction>(this.reactionsUrl, credentials);
+  }
+
+  //separate counts of all(reactions, comments, users) 
+  getCounts(): Observable<any> {
+    return this.http.get<any>(this.countsUrl)
   }
 }

@@ -42,10 +42,6 @@ export class PostsApiService {
     return this.http.get<ICategory[]>(this.getCategoriesUrl);
   }
 
-  // getCategoriesByPost(id: number): Observable<ICategory> {
-  //   return this.http.get<ICategory>(this.getCategoriesUrl+'/post/'+id);
-  // }
-
   getSingleCategory(id: number): Observable<ICategory> {
     return this.http.get<ICategory>(this.getCategoriesUrl + '/' + id);
   }
