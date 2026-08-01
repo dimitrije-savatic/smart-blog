@@ -44,6 +44,7 @@
                   (click)="addReaction(com?.id, parsedUser?.id, 'comment', 'heart')"></ng-icon>
               </button>
 
+              @if (parsedUser.id == com.author?.id) {
               <!-- Three Dots Menu -->
               <div class="relative">
 
@@ -70,6 +71,7 @@
                 </div>
 
               </div>
+              }
             </div>
           </div>
 

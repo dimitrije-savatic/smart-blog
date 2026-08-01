@@ -5,6 +5,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
 import { AdminFooterComponent } from './components/admin-footer/admin-footer.component';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
+import { NgIconsModule } from '@ng-icons/core';
+import { heroChevronDown, heroChevronUp, heroDocumentPlus, heroFolderPlus } from '@ng-icons/heroicons/outline';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,12 @@ import { AdminLayoutComponent } from './components/admin-layout/admin-layout.com
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
-  ]
+    SharedModule,
+    NgIconsModule.withIcons({
+      heroChevronUp,
+      heroChevronDown,
+      heroFolderPlus,
+      heroDocumentPlus
+    })]
 })
 export class AdminLayoutModule { }

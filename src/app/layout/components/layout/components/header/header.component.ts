@@ -12,8 +12,10 @@ export class HeaderComponent implements OnInit {
 
   user: any
   active: string = 'text-green-500';
+  writePostButtonActive: string = 'text-white bg-green-500 border-white';
   loginButtonTitle: string = 'Login'
   logoutButtonTitle: string = 'Logout'
+  createPostButtonTitle: string = 'Write post'
   appName: string = 'SmartBlog'
   message: string = ""
 
@@ -22,7 +24,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     if (this.userService.isLoggedIn()) {
       this.user = this.userService.getUser();
-      console.log(this.user)
     } else {
       console.log('User not logged in.');
     }

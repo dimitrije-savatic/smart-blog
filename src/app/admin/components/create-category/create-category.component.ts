@@ -3,11 +3,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostsApiService } from '../../../services/post.service';
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrl: './create.component.css',
+  selector: 'app-create-category',
+  templateUrl: './create-category.component.html',
+  styleUrl: './create-category.component.css',
 })
-export class CreateComponent implements OnInit {
+export class CreateCategoryComponent implements OnInit {
   userId: number = 0;
   categories: any;
   location: string = '';
@@ -73,7 +73,7 @@ export class CreateComponent implements OnInit {
   }
 
   createPostCategories(): void {
-    
+
   }
 
   createCategory(name: string): void {

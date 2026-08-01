@@ -11,6 +11,12 @@ export class AdminHeaderComponent implements OnInit {
   appName: string = "SmartBlog"
   user: any;
 
+  isOpen = false;
+
+  toggleMenu(): void {
+    this.isOpen = !this.isOpen;
+  }
+
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -25,12 +31,12 @@ export class AdminHeaderComponent implements OnInit {
 
   links: any[] = [
     {
-      name: "Admin Panel",
-      path: "/admin"
+      name: "Home",
+      path: "/"
     },
     {
-      name: "Create",
-      path: "create"
-    },
+      name: "Admin Panel",
+      path: "/admin"
+    }
   ]
 }

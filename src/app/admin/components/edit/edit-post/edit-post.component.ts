@@ -30,7 +30,6 @@ export class EditPostComponent implements OnInit {
   ngOnInit(): void {
     this.runValidation(this.formEditPost);
     this.getPost(Number(this.postId));
-    // this.getCategoriesByPost(this.postId);
   }
 
   constructor(
@@ -41,6 +40,7 @@ export class EditPostComponent implements OnInit {
   getPost(id: number): void {
     this.postsApiService.getSinglePost(id).subscribe({
       next: (data) => {
+        console.log(data);
         this.formEditPost.patchValue({
           title: data.title,
           body: data.body,
@@ -52,17 +52,6 @@ export class EditPostComponent implements OnInit {
       },
     });
   }
-
-  // getCategoriesByPost(id: number): void{
-  //   this.postsApiService.getCategoriesByPost(id).subscribe({
-  //     next: (data)=>{
-  //       this.categories = data;
-  //     },
-  //     error: (err)=>{
-  //       console.error(err);
-  //     }
-  //   })
-  // }
 
   updatePost(id: number, title: string, body: string, user_id: number): void {
     this.postsApiService.updatePost({ id, title, body, user_id }).subscribe({

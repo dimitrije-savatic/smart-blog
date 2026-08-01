@@ -8,8 +8,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class NotificationModalComponent {
   @Input() notification!: string;
   @Input() body!: string;
-  @Input() borderColor: string = 'black';
-  @Input() buttonColor: string = 'green';
+  @Input() borderColor: string = 'border-1 border-mist-950';
+  @Input() buttonColor: string = 'bg-emerald-600';
   @Input() newLocation!: string;
 
   reload() {

@@ -1,33 +1,41 @@
 <div class="container-lg w-full">
-  <header
-    class="container-2xl flex flex-wrap justify-between px-5 w-full h-14 text-white body-font bg-emerald-700"
-  >
+  <header class="container-2xl flex flex-wrap justify-between px-5 w-full h-14 text-white body-font bg-emerald-700">
     <div class="flex items-center">
       @for (link of links; track link.name) {
-        <a
-          class=" hover:text-gray-900 cursor-pointer odd:border-r odd:pr-2 even:pl-2"
-          routerLink="{{ link.path }}"
-          [routerLinkActive]="active"
-          [routerLinkActiveOptions]="{exact: true}"
-          >{{ link.name }}</a
-        >
+      <a class="text-sm hover:text-gray-900 cursor-pointer mr-2 pr-2" routerLink="{{ link.path }}"
+        [routerLinkActive]="active" [routerLinkActiveOptions]="{exact: true}">{{ link.name }}</a>
+      }
+      <div class="relative inline-block">
+        <button (click)="toggleMenu()"
+          class="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 transition">
+          Create
+          <ng-icon [name]="isOpen ? 'heroChevronUp' : 'heroChevronDown'">
+          </ng-icon>
+        </button>
+
+        @if (isOpen) {
+        <div
+          class="absolute right-0 z-50 mt-2 w-52 overflow-hidden rounded-xl bg-white text-gray-500 shadow-lg ring-1 ring-gray-200">
+          <a routerLink="/posts/create" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition">
+            <ng-icon name="heroDocumentPlus"></ng-icon>
+            <span>Create Post</span>
+          </a>
+
+          <a routerLink="create/category" [routerLinkActive]="active" (click)="isOpen = !isOpen"
+            class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition">
+            <ng-icon name="heroFolderPlus"></ng-icon>
+            <span>Create Category</span>
+          </a>
+        </div>
         }
+      </div>
     </div>
     <div class="flex text-white">
       <a class="flex items-center cursor-pointer" routerLink="/home">
-        <svg
-          class="w-9 h-9 text-emerald-800 p-2 bg-white rounded-full"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
-          />
+        <svg class="w-9 h-9 text-emerald-800 p-2 bg-white rounded-full" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
         </svg>
 
         <span class="ml-3 text-xl">{{ appName }}</span>
@@ -35,27 +43,16 @@
     </div>
     <div class="flex flex-row items-center justify-evenly">
       <div class="flex-column mr-5">
-        <div class="name text">
+        <div class="name text-sm font-semibold">
           {{ user.first_name + " " + user.last_name }}
         </div>
         <div class="profession text-xs">{{ user.email }}</div>
       </div>
-      <div
-        class="avatar flex w-9 h-9 items-center justify-center rounded-full text-emerald-700 bg-white"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-          />
+      <div class="avatar flex w-9 h-9 items-center justify-center rounded-full text-emerald-700 bg-white">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
         </svg>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { createComponent, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './components/admin/admin.component';
-import { CreateComponent } from './components/create/create.component';
+import { CreateCategoryComponent } from './components/create-category/create-category.component';
 import { EditPostComponent } from './components/edit/edit-post/edit-post.component';
 import { EditCategoryComponent } from './components/edit/edit-category/edit-category.component';
 
@@ -11,8 +11,8 @@ const routes: Routes = [
     component: AdminComponent
   },
   {
-    path: "create",
-    component: CreateComponent
+    path: "create/category",
+    component: CreateCategoryComponent
   },
   {
     path: 'edit/post/:id',

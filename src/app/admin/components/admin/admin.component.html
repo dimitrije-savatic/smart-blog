@@ -157,7 +157,7 @@
     *ngIf="showModal">
     <div class="w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col mx-auto mt-10 md:mt-0">
       <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
-        Delete {{ title.charAt(0).toUpperCase() + title.slice(1) }}
+        Delete {{ title | capitalize}}
       </h2>
       <div class="relative mb-4">
         <p class="leading-7 text-sm text-gray-600">
