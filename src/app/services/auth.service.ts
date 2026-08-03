@@ -15,15 +15,15 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(this.loginUrl, credentials);
+    return this.http.post<any>(this.loginUrl, credentials, { withCredentials: true });
   }
 
   register(credentials: { first_name: string, last_name: string, email: string, password: string }): Observable<IUser> {
-    return this.http.post<IUser>(this.registerUrl, credentials);
+    return this.http.post<IUser>(this.registerUrl, credentials, { withCredentials: true });
   }
 
   logout(credentials: { user: object }): Observable<any> {
-    return this.http.post<any>(this.logoutUrl, credentials);
+    return this.http.post<any>(this.logoutUrl, credentials, { withCredentials: true });
   }
 
   runValidation(formGroup: any): void {

@@ -25,7 +25,7 @@ export class PostsApiService {
   }
 
   getSinglePost(id: number): Observable<IPost> {
-    return this.http.get<IPost>(this.getPostsUrl + '/' + id);
+    return this.http.get<IPost>(this.getPostsUrl + '/' + id, { withCredentials: true });
   }
 
   createPost(credentials: { title: string, body: string, user_id: number }): Observable<any> {

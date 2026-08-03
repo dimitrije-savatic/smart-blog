@@ -12,7 +12,6 @@ const routes: Routes = [
   },
   {
     path: "post/:id",
-    canActivate: [PostGuard],
     component: SinglePostComponent
   },
   {
