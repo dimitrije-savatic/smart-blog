@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostsApiService } from '../../../../services/post.service';
 import { ActivatedRoute } from '@angular/router';
 @Component({
@@ -30,6 +30,7 @@ export class EditPostComponent implements OnInit {
   ngOnInit(): void {
     this.runValidation(this.formEditPost);
     this.getPost(Number(this.postId));
+    this.getCategories();
   }
 
   constructor(
@@ -40,10 +41,10 @@ export class EditPostComponent implements OnInit {
   getPost(id: number): void {
     this.postsApiService.getSinglePost(id).subscribe({
       next: (data) => {
-        console.log(data);
         this.formEditPost.patchValue({
           title: data.title,
           body: data.body,
+          category: data.categories.map((c: any) => c.id)
         });
         this.post = data;
       },
@@ -53,8 +54,19 @@ export class EditPostComponent implements OnInit {
     });
   }
 
-  updatePost(id: number, title: string, body: string, user_id: number): void {
-    this.postsApiService.updatePost({ id, title, body, user_id }).subscribe({
+  getCategories(): void {
+    this.postsApiService.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  updatePost(title: string, body: string, user_id: number, category: number[]): void {
+    this.postsApiService.updatePost({ title, body, user_id, category_ids: category }, Number(this.postId)).subscribe({
       next: (data) => {
         this.success = true;
         this.location = '/admin'
@@ -80,13 +92,35 @@ export class EditPostComponent implements OnInit {
       Validators.minLength(10),
       Validators.maxLength(535),
     ]),
-    category: new FormControl([true], [Validators.requiredTrue]),
+    category: new FormControl([], Validators.required),
   });
 
   runValidation(formEdit: any): void {
     Object.keys(formEdit.controls).forEach((ctrlName) => {
       formEdit.get(ctrlName).markAsTouched();
     });
+  }
+
+  isSelected(id: number): boolean {
+    return this.formEditPost.value.category.includes(id);
+  }
+
+  onCategoryChange(checked: boolean, id: number): void {
+    const control = this.formEditPost.get('category') as FormControl<number[]>;
+    const values = [...control.value];
+
+    if (checked) {
+      if (!values.includes(id)) {
+        values.push(id);
+      }
+    } else {
+      const index = values.indexOf(id);
+      if (index > -1) {
+        values.splice(index, 1);
+      }
+    }
+
+    control.setValue(values);
   }
 
 }

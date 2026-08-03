@@ -7,7 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CreateCategoryComponent } from './components/create-category/create-category.component';
 import { EditCategoryComponent } from './components/edit/edit-category/edit-category.component';
 import { NgIconsModule } from '@ng-icons/core';
-import { heroChatBubbleLeftRight, heroHeart, heroUser } from '@ng-icons/heroicons/outline';
+import { heroChatBubbleLeftRight, heroHeart, heroUser, heroEye } from '@ng-icons/heroicons/outline';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { heroChatBubbleLeftRight, heroHeart, heroUser } from '@ng-icons/heroicon
     NgIconsModule.withIcons({
       heroHeart,
       heroUser,
-      heroChatBubbleLeftRight
+      heroChatBubbleLeftRight,
+      heroEye
     })
   ]
 })

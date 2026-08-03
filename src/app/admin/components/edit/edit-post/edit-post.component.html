@@ -33,12 +33,13 @@
           </mat-form-field>
         </div>
         <div class="relative mb-4">
-          @for (cat of post?.categories; track cat) {
-          <mat-checkbox color="primary" [formControl]="formEditPost.get('category')">{{cat.name}}</mat-checkbox>
+          @for (cat of categories; track cat) {
+          <mat-checkbox color="primary" [checked]="isSelected(cat.id)"
+            (change)="onCategoryChange($event.checked, cat.id)">{{cat.name}}</mat-checkbox>
           }
         </div>
         <button mat-raised-button color="primary" style="width: 100%"
-          (click)="updatePost(post.id, formEditPost.get('title').value, formEditPost.get('body').value, post.user_id)"
+          (click)="updatePost(formEditPost.get('title').value, formEditPost.get('body').value, post.author?.id, formEditPost.get('category').value)"
           [disabled]="formEditPost.invalid">
           Submit
         </button>

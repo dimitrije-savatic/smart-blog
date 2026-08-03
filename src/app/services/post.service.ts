@@ -32,8 +32,8 @@ export class PostsApiService {
     return this.http.post<any>(this.getPostsUrl + '/create', credentials);
   }
 
-  updatePost(credentials: { id: number, title: string, body: string, user_id: number }): Observable<any> {
-    return this.http.put<any>(this.getPostsUrl + '/update', credentials);
+  updatePost(credentials: { title: string, body: string, user_id: number, category_ids: number[] }, id: number): Observable<any> {
+    return this.http.put<any>(this.getPostsUrl + '/' + id, credentials);
   }
 
   // CATEGORY REQUESTS

@@ -110,7 +110,10 @@ export class AdminComponent implements OnInit {
     this.reactionsService.getCounts().subscribe({
       next: (data) => {
         this.counts = data
-        this.statisticsArray = [{ "name": this.counts[0].name, "number": this.counts[0].number, "icon": 'heroUser', "color": "text-emerald-500" }, { "name": this.counts[1].name, "number": this.counts[1].number, "icon": 'heroHeart', "color": "text-red-600" }, { "name": this.counts[2].name, "number": this.counts[2].number, "icon": 'heroChatBubbleLeftRight', "color": "text-indigo-600" }]
+        this.statisticsArray = [{ "name": this.counts[0].name, "number": this.counts[0].number, "icon": 'heroUser', "color": "text-emerald-500" },
+        { "name": this.counts[1].name, "number": this.counts[1].number, "icon": 'heroEye', "color": "text-sky-400" },
+        { "name": this.counts[2].name, "number": this.counts[2].number, "icon": 'heroHeart', "color": "text-red-600" },
+        { "name": this.counts[3].name, "number": this.counts[3].number, "icon": 'heroChatBubbleLeftRight', "color": "text-indigo-600" }]
       },
       error: (err) => {
         console.error(err);
