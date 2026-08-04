@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -10,30 +11,18 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {}
-  
+  constructor(private authService: AuthService, private router: Router, private notificationService: NotificationService) { }
+
   hide = true;
-  location: string = ''
 
-  // Error registration modal
-  error: boolean = false;
-  notificationError: string = 'Registration failed'
-  bodyError: string = 'Something went wrong. try again.'
-  borderColorError: string = '#F44336'
-  buttonColorError: string = '#F44336'
-
-  // Successfull registration modal
-  success: boolean = false;
-  notificationSuccess: string = 'Successfull registration'
-  bodySuccess: string = 'You have registered successfully.'
-  borderColorSuccess: string = '#22C55E'
-  buttonColorSuccess: string = '#22C55E'
-  
   ngOnInit(): void {
     this.runValidation();
   }
 
   form: any = new FormGroup({
+    username: new FormControl('', [
+      Validators.required,
+    ]),
     first_name: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -64,21 +53,20 @@ export class RegisterComponent implements OnInit {
   }
 
   register(
+    username: string,
     first_name: string,
     last_name: string,
     email: string,
     password: string
   ): void {
     this.authService
-      .register({ first_name, last_name, email, password })
+      .register({ username, first_name, last_name, email, password })
       .subscribe({
-        next: (data) =>{
-          this.success = true;
-          this.location = '/auth/login';
-          console.log('User added successfully!', data);
-        },error: (err)=>{
-          this.error = true;
-          this.location = '/auth/register';
+        next: (data) => {
+          this.notificationService.show('Registration successful. Please log in.', 'success');
+          this.router.navigate(['/auth/login']);
+        }, error: (err) => {
+          this.notificationService.show(err.error.error?.message, 'error');
           console.error(err);
         }
       });

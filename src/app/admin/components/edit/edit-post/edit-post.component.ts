@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostsApiService } from '../../../../services/post.service';
 import { ActivatedRoute } from '@angular/router';
+import { NotificationService } from '../../../../services/notification.service';
 @Component({
   selector: 'app-edit-post',
   templateUrl: './edit-post.component.html',
@@ -11,21 +12,6 @@ export class EditPostComponent implements OnInit {
   postId: any = this.activatedRoute.snapshot.paramMap.get('id');
   post: any;
   categories: any;
-  location: string = ''
-
-  // Error registration modal
-  error: boolean = false;
-  notificationError: string = 'Update failed'
-  bodyError: string = 'Something went wrong. Try again'
-  borderColorError: string = '#F44336'
-  buttonColorError: string = '#F44336'
-
-  // Successfull registration modal
-  success: boolean = false;
-  notificationSuccess: string = 'Successfull update'
-  bodySuccess: string = ''
-  borderColorSuccess: string = '#22C55E'
-  buttonColorSuccess: string = '#22C55E'
 
   ngOnInit(): void {
     this.runValidation(this.formEditPost);
@@ -35,7 +21,8 @@ export class EditPostComponent implements OnInit {
 
   constructor(
     private postsApiService: PostsApiService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private notificationService: NotificationService
   ) { }
 
   getPost(id: number): void {
@@ -68,14 +55,11 @@ export class EditPostComponent implements OnInit {
   updatePost(title: string, body: string, user_id: number, category: number[]): void {
     this.postsApiService.updatePost({ title, body, user_id, category_ids: category }, Number(this.postId)).subscribe({
       next: (data) => {
-        this.success = true;
-        this.location = '/admin'
-        this.bodySuccess = data.message
-
+        this.notificationService.show('Post updated successfully.', 'success');
+        this.getPost(Number(this.postId));
       },
       error: (err) => {
-        this.error = true;
-        this.location = ''
+        this.notificationService.show(err.error.error?.message, 'error');
         console.error(err);
       },
     });

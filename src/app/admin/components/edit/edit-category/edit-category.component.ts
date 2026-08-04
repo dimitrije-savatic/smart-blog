@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostsApiService } from '../../../../services/post.service';
 import { ActivatedRoute } from '@angular/router';
+import { NotificationService } from '../../../../services/notification.service';
 
 @Component({
   selector: 'app-edit-category',
@@ -13,21 +14,6 @@ export class EditCategoryComponent implements OnInit {
 
   categoryId: any = this.activatedRoute.snapshot.paramMap.get('id')
   category: any
-  location: string = ''
-
-  // Error registration modal
-  error: boolean = false;
-  notificationError: string = 'Update failed'
-  bodyError: string = 'Something went wrong. Try again'
-  borderColorError: string = '#F44336'
-  buttonColorError: string = '#F44336'
-
-  // Successfull registration modal
-  success: boolean = false;
-  notificationSuccess: string = 'Successfull update'
-  bodySuccess: string = ''
-  borderColorSuccess: string = '#22C55E'
-  buttonColorSuccess: string = '#22C55E'
 
   ngOnInit(): void {
     this.runValidation(this.formEditCategory);
@@ -36,8 +22,9 @@ export class EditCategoryComponent implements OnInit {
 
   constructor(
     private postsApiService: PostsApiService,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private notificationService: NotificationService
+  ) { }
 
   formEditCategory: any = new FormGroup({
     name: new FormControl('', [
@@ -53,10 +40,10 @@ export class EditCategoryComponent implements OnInit {
     });
   }
 
-  getCategory(id: number): void{
+  getCategory(id: number): void {
     this.postsApiService.getSingleCategory(id).subscribe({
       next: (data) => {
-        this.formEditCategory.patchValue({name: data.name})
+        this.formEditCategory.patchValue({ name: data.name })
         this.category = data;
       },
       error: (err) => {
@@ -65,16 +52,13 @@ export class EditCategoryComponent implements OnInit {
     })
   }
 
-  updateCategory(id:number, name: string): void{
-    this.postsApiService.updateCategory({id, name}).subscribe({
+  updateCategory(id: number, name: string): void {
+    this.postsApiService.updateCategory({ name }, this.categoryId).subscribe({
       next: (data) => {
-        this.success = true;
-        this.bodySuccess = data.message
-        this.location = '/admin'
+        this.notificationService.show('Category updated successfully.', 'success');
       },
-      error: (err) =>{
-        this.error = true
-        this.location = ''
+      error: (err) => {
+        this.notificationService.show(err.error.error?.message, 'error');
         console.error(err);
       }
     })

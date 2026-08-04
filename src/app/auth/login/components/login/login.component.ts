@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
+import { NotificationService } from '../../../../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -10,17 +11,9 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router){
-  }
+  constructor(private authService: AuthService, private router: Router, private notificationService: NotificationService) { }
 
   hide = true;
-  error: boolean = false;
-  notification: string = 'Login error';
-  body: string = 'Something went wrong. Try again.'
-  borderColor: string = '#F44336';
-  buttonColor: string = '#F44336';
-  location: string = '';
-  
 
   form: any = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
@@ -31,25 +24,24 @@ export class LoginComponent implements OnInit {
     this.runValidation();
   }
 
-  runValidation(): void{
-    Object.keys(this.form.controls).forEach(ctrlName =>{
+  runValidation(): void {
+    Object.keys(this.form.controls).forEach(ctrlName => {
       this.form.get(ctrlName).markAsTouched()
     })
   }
 
-  login(email: string, password:string){
-    this.authService.login({email,password}).subscribe({
-        next: (data) => { 
+  login(email: string, password: string) {
+    this.authService.login({ email, password }).subscribe({
+      next: (data) => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         window.location.replace('/home');
-        },
-        error: (err) => {
-          this.error = true;
-          this.location = 'auth/login';
-          console.error(err);
-        }
+      },
+      error: (err) => {
+        this.notificationService.show(err.error.error?.message, 'error');
+        console.error(err);
       }
+    }
     );
   }
 }

@@ -33,16 +33,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { NotificationModalComponent } from './components/notification-modal/notification-modal.component';
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { CreatePostComponent } from '../posts/components/posts/create-post/create-post.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
     ButtonComponent,
-    NotificationModalComponent,
     CapitalizePipe,
-    CreatePostComponent
+    CreatePostComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -83,7 +83,6 @@ import { CreatePostComponent } from '../posts/components/posts/create-post/creat
   exports: [
     HttpClientModule,
     ButtonComponent,
-    NotificationModalComponent,
     CreatePostComponent,
     ReactiveFormsModule,
     MatAutocompleteModule,
@@ -117,7 +116,8 @@ import { CreatePostComponent } from '../posts/components/posts/create-post/creat
     MatInputModule,
     MatButtonModule,
     MatPaginatorModule,
-    CapitalizePipe
+    CapitalizePipe,
+    NotificationComponent
   ]
 })
 export class SharedModule { }

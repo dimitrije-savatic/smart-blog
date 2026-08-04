@@ -18,7 +18,7 @@ export class AuthService {
     return this.http.post<any>(this.loginUrl, credentials, { withCredentials: true });
   }
 
-  register(credentials: { first_name: string, last_name: string, email: string, password: string }): Observable<IUser> {
+  register(credentials: { username: string, first_name: string, last_name: string, email: string, password: string }): Observable<IUser> {
     return this.http.post<IUser>(this.registerUrl, credentials, { withCredentials: true });
   }
 

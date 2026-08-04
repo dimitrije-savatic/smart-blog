@@ -29,7 +29,7 @@ export class PostsApiService {
   }
 
   createPost(credentials: { title: string, body: string, user_id: number }): Observable<any> {
-    return this.http.post<any>(this.getPostsUrl + '/create', credentials);
+    return this.http.post<any>(this.getPostsUrl, credentials);
   }
 
   updatePost(credentials: { title: string, body: string, user_id: number, category_ids: number[] }, id: number): Observable<any> {
@@ -47,19 +47,19 @@ export class PostsApiService {
   }
 
   createCategories(credential: { name: string }): Observable<any> {
-    return this.http.post<any>(this.getCategoriesUrl + '/create', credential);
+    return this.http.post<any>(this.getCategoriesUrl, credential);
   }
 
-  updateCategory(credentials: { id: number, name: string }): Observable<any> {
-    return this.http.put<any>(this.getCategoriesUrl + '/update', credentials);
+  updateCategory(credentials: { name: string }, id: number): Observable<any> {
+    return this.http.put<any>(this.getCategoriesUrl + '/' + id, credentials);
   }
 
 
   deleteItem(id: number, type: string): Observable<any> {
     if (type == 'post') {
-      return this.http.delete(this.getPostsUrl + '/delete/' + id);
+      return this.http.delete(this.getPostsUrl + '/' + id);
     } else if (type == 'categories') {
-      return this.http.delete(this.getCategoriesUrl + '/delete/' + id);
+      return this.http.delete(this.getCategoriesUrl + '/' + id);
     } else {
       return EMPTY;
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostsApiService } from '../../../services/post.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-create-category',
@@ -10,23 +11,8 @@ import { PostsApiService } from '../../../services/post.service';
 export class CreateCategoryComponent implements OnInit {
   userId: number = 0;
   categories: any;
-  location: string = '';
 
-  // Error registration modal
-  error: boolean = false;
-  notificationError: string = 'Update failed';
-  bodyError: string = 'Something went wrong. Try again';
-  borderColorError: string = '#F44336';
-  buttonColorError: string = '#F44336';
-
-  // Successfull registration modal
-  success: boolean = false;
-  notificationSuccess: string = 'Successfull update';
-  bodySuccess: string = '';
-  borderColorSuccess: string = '#22C55E';
-  buttonColorSuccess: string = '#22C55E';
-
-  constructor(private postsService: PostsApiService) {
+  constructor(private postsService: PostsApiService, private notificationService: NotificationService) {
     this.getUserId();
   }
 
@@ -57,35 +43,13 @@ export class CreateCategoryComponent implements OnInit {
     });
   }
 
-  createPost(title: string, body: string, user_id: number): void {
-    this.postsService.createPost({ title, body, user_id }).subscribe({
-      next: (data) => {
-        this.success = true;
-        this.bodySuccess = data.message;
-        this.location = '/admin';
-      },
-      error: (err) => {
-        this.error = true;
-        this.location = '';
-        console.log(err);
-      },
-    });
-  }
-
-  createPostCategories(): void {
-
-  }
-
   createCategory(name: string): void {
     this.postsService.createCategories({ name }).subscribe({
       next: (data) => {
-        this.success = true;
-        this.bodySuccess = data.message;
-        this.location = '/admin';
+        this.notificationService.show('Category created successfully.', 'success');
       },
       error: (err) => {
-        this.error = true;
-        this.location = '';
+        this.notificationService.show(err.error.error?.message, 'error');
         console.log(err);
       },
     });
