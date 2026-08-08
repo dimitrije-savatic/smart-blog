@@ -37,12 +37,14 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { CreatePostComponent } from '../posts/components/posts/create-post/create-post.component';
 import { NotificationComponent } from './components/notification/notification.component';
 
+
 @NgModule({
   declarations: [
     ButtonComponent,
     CapitalizePipe,
     CreatePostComponent,
-    NotificationComponent
+    NotificationComponent,
+
   ],
   imports: [
     CommonModule,
@@ -78,7 +80,7 @@ import { NotificationComponent } from './components/notification/notification.co
     MatCheckboxModule,
     MatInputModule,
     MatButtonModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ],
   exports: [
     HttpClientModule,
@@ -117,7 +119,7 @@ import { NotificationComponent } from './components/notification/notification.co
     MatButtonModule,
     MatPaginatorModule,
     CapitalizePipe,
-    NotificationComponent
+    NotificationComponent,
   ]
 })
 export class SharedModule { }

@@ -8,7 +8,7 @@ import { SinglePostComponent } from './components/posts/post-single/single-post.
 import { SharedModule } from '../shared/shared.module';
 import { CommentsComponent } from './components/posts/post-single/comments/comments.component';
 import { NgIconsModule } from '@ng-icons/core';
-import { heroFaceFrown, heroFaceSmile, heroFire, heroHandThumbUp, heroHeart } from '@ng-icons/heroicons/outline';
+import { heroFaceFrown, heroFaceSmile, heroFire, heroHandThumbUp, heroHeart, heroChatBubbleLeftRight, heroEye, heroArrowRight } from '@ng-icons/heroicons/outline';
 import { heroFaceFrownSolid, heroFaceSmileSolid, heroFireSolid, heroHandThumbUpSolid, heroHeartSolid } from '@ng-icons/heroicons/solid';
 
 @NgModule({
@@ -33,7 +33,10 @@ import { heroFaceFrownSolid, heroFaceSmileSolid, heroFireSolid, heroHandThumbUpS
       heroFaceFrown,
       heroFaceFrownSolid,
       heroHeart,
-      heroHeartSolid
+      heroHeartSolid,
+      heroChatBubbleLeftRight,
+      heroEye,
+      heroArrowRight
     })
   ]
 })

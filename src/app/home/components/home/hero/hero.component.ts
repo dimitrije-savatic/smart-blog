@@ -11,18 +11,20 @@ export class HeroComponent implements OnInit {
   constructor(public postsApiService: PostsApiService) { }
 
 
-  @Input() posts!: IPost[]
   latestPosts: IPost[] = []
 
   ngOnInit(): void {
-  }
-
-  ngOnChanges(): void {
     this.getLatestPosts();
   }
 
-  getLatestPosts(): IPost[] {
-    this.latestPosts = this.posts.slice(-3).reverse();
-    return this.latestPosts;
+  getLatestPosts(): void {
+    this.postsApiService.getLatestPosts().subscribe({
+      next: (posts: IPost[]) => {
+        this.latestPosts = posts;
+      },
+      error: (error: any) => {
+        console.error(error);
+      }
+    })
   }
 }

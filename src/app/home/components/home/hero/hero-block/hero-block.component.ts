@@ -7,13 +7,9 @@ import { IReaction } from '../../../../../interfaces/i-reaction';
   templateUrl: './hero-block.component.html',
   styleUrl: './hero-block.component.css',
 })
-export class HeroBlockComponent implements OnInit {
+export class HeroBlockComponent {
   @Input() post!: any;
-  reactions: IReaction[] = [];
 
   constructor(private reactionsService: ReactionsService) { }
-
-  ngOnInit(): void {
-  }
 
 }

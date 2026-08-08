@@ -35,13 +35,13 @@ export class HeaderComponent implements OnInit {
       path: "home"
     },
     {
-      name: "Contact",
-      path: "contact"
-    },
-    {
       name: "Posts",
       path: "posts"
     },
+    {
+      name: "Contact",
+      path: "contact"
+    }
   ]
 
   logout(): void {

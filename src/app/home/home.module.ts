@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 import { HeroBlockComponent } from './components/home/hero/hero-block/hero-block.component';
 import { NewsBlockComponent } from './components/home/news/news-block/news-block.component';
 import { SharedModule } from '../shared/shared.module';
+import { NgIconsModule } from "@ng-icons/core";
+import { heroChatBubbleLeftRight, heroHeart, heroUser, heroEye, heroArrowRight } from '@ng-icons/heroicons/outline';
 
 
 @NgModule({
@@ -27,7 +29,14 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     HomeRoutingModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    NgIconsModule.withIcons({
+      heroHeart,
+      heroUser,
+      heroChatBubbleLeftRight,
+      heroEye,
+      heroArrowRight
+    })
   ]
 })
 export class HomeModule { }
