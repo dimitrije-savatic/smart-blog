@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, EMPTY } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { IPost } from '../interfaces/i-post';
 import { ICategory } from '../interfaces/i-category';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostsApiService {
+export class PostService {
   private getPostsUrl = "http://localhost:8000/api/posts";
   private getCategoriesUrl = 'http://localhost:8000/api/categories';
 
@@ -16,8 +17,8 @@ export class PostsApiService {
 
   // POST REQUESTS
 
-  getPosts(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(this.getPostsUrl);
+  getPosts(params?: HttpParams): Observable<any> {
+    return this.http.get<any>(this.getPostsUrl, { params });
   }
 
   getLatestPosts(): Observable<IPost[]> {

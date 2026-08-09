@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PostsApiService } from '../../../../services/post.service';
 
 @Component({
   selector: 'app-posts-block',
@@ -12,7 +11,7 @@ export class PostsBlockComponent implements OnInit {
 
   categories: any
 
-  constructor(private postsService: PostsApiService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

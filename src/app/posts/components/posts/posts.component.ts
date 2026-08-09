@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PostsApiService } from '../../../services/post.service';
+import { Component, OnInit } from '@angular/core';
+import { PostService } from '../../../services/post.service';
 import { PageEvent } from '@angular/material/paginator';
+import { HttpParams } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-posts',
@@ -10,25 +13,70 @@ import { PageEvent } from '@angular/material/paginator';
 export class PostsComponent implements OnInit {
 
   posts: any[] = [];
+  categories: any[] = [];
   paginatedPosts: any[] = [];
-  public pageSize = 12;
+  public perPage = 12;
   public currentPage = 0;
+  search = '';
+  selectedCategory = '';
+  sortBy = 'newest';
 
-  buttonTitle: string = 'View All';
+  searchSubject = new Subject<string>();
 
-
-  constructor(private postsService: PostsApiService) { }
+  constructor(private postService: PostService) { }
 
   ngOnInit() {
-    this.getPosts();
+    // Subscribe to search input changes with debounce
+    this.searchSubject.pipe(debounceTime(400), distinctUntilChanged()).subscribe(searchTerm => {
+      this.search = searchTerm;
+      this.filterPosts();
+    })
+    this.filterPosts();
+    this.getCategories();
     this.updatePaginatedItems();
   }
 
-  private getPosts() {
-    this.postsService.getPosts().subscribe({
+  ngOnChanges() {
+    this.filterPosts();
+  }
+
+  filterPosts() {
+    let params = new HttpParams()
+      .set('sort', this.sortBy);
+
+    if (this.search) {
+      params = params.set('search', this.search);
+    }
+
+    if (this.selectedCategory) {
+      params = params.set('category', this.selectedCategory);
+    }
+
+    this.postService.getPosts(params).subscribe({
       next: (data) => {
         this.posts = data;
         this.updatePaginatedItems();
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  resetFilters() {
+    if (this.search == '' && this.selectedCategory == '' && this.sortBy == 'newest') {
+      return;
+    }
+    this.search = '';
+    this.selectedCategory = '';
+    this.sortBy = 'newest';
+    this.filterPosts();
+  }
+
+  private getCategories() {
+    this.postService.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
       },
       error: (err) => {
         console.error(err);
@@ -37,14 +85,14 @@ export class PostsComponent implements OnInit {
   }
 
   onPageChange(event: PageEvent) {
-    this.pageSize = event.pageSize;
+    this.perPage = event.pageSize;
     this.currentPage = event.pageIndex;
     this.updatePaginatedItems();
   }
 
   updatePaginatedItems() {
-    const startIndex = this.currentPage * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
+    const startIndex = this.currentPage * this.perPage;
+    const endIndex = startIndex + this.perPage;
     this.paginatedPosts = this.posts.slice(startIndex, endIndex);
   }
 }

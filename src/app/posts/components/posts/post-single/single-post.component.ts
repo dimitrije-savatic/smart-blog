@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PostsApiService } from '../../../../services/post.service';
+import { PostService } from '../../../../services/post.service';
 import { ReactionsService } from '../../../../services/reactions.service';
 import { IComment } from '../../../../interfaces/i-comment';
 
@@ -20,7 +20,7 @@ export class SinglePostComponent implements OnInit {
   currentReaction: string | null = null;
 
   constructor(
-    private postsApiService: PostsApiService,
+    private postService: PostService,
     private reactionsService: ReactionsService,
     private activatedRoute: ActivatedRoute,
   ) { }
@@ -30,7 +30,7 @@ export class SinglePostComponent implements OnInit {
   }
 
   getPost(id: number): void {
-    this.postsApiService.getSinglePost(id).subscribe({
+    this.postService.getSinglePost(id).subscribe({
       next: (data) => {
         this.post = data;
         this.comments = this.post.comments;

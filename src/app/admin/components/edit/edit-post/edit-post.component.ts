@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PostsApiService } from '../../../../services/post.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { PostService } from '../../../../services/post.service';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../../../../services/notification.service';
 @Component({
@@ -20,13 +20,13 @@ export class EditPostComponent implements OnInit {
   }
 
   constructor(
-    private postsApiService: PostsApiService,
+    private postService: PostService,
     private activatedRoute: ActivatedRoute,
     private notificationService: NotificationService
   ) { }
 
   getPost(id: number): void {
-    this.postsApiService.getSinglePost(id).subscribe({
+    this.postService.getSinglePost(id).subscribe({
       next: (data) => {
         this.formEditPost.patchValue({
           title: data.title,
@@ -42,7 +42,7 @@ export class EditPostComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.postsApiService.getCategories().subscribe({
+    this.postService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
       },
@@ -53,7 +53,7 @@ export class EditPostComponent implements OnInit {
   }
 
   updatePost(title: string, body: string, user_id: number, category: number[]): void {
-    this.postsApiService.updatePost({ title, body, user_id, category_ids: category }, Number(this.postId)).subscribe({
+    this.postService.updatePost({ title, body, user_id, category_ids: category }, Number(this.postId)).subscribe({
       next: (data) => {
         this.notificationService.show('Post updated successfully.', 'success');
         this.getPost(Number(this.postId));

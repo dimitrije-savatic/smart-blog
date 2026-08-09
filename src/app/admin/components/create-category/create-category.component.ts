@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PostsApiService } from '../../../services/post.service';
+import { PostService } from '../../../services/post.service';
 import { NotificationService } from '../../../services/notification.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class CreateCategoryComponent implements OnInit {
   userId: number = 0;
   categories: any;
 
-  constructor(private postsService: PostsApiService, private notificationService: NotificationService) {
+  constructor(private postService: PostService, private notificationService: NotificationService) {
     this.getUserId();
   }
 
@@ -33,7 +33,7 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.postsService.getCategories().subscribe({
+    this.postService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
       },
@@ -44,7 +44,7 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   createCategory(name: string): void {
-    this.postsService.createCategories({ name }).subscribe({
+    this.postService.createCategories({ name }).subscribe({
       next: (data) => {
         this.notificationService.show('Category created successfully.', 'success');
       },

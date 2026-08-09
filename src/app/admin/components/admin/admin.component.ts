@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, Renderer2 } from '@angular/core';
-import { PostsApiService } from '../../../services/post.service';
+import { PostService } from '../../../services/post.service';
 import { UserService } from '../../../services/user.service';
 import { IUser } from '../../../interfaces/i-user';
 import { IPost } from '../../../interfaces/i-post';
@@ -15,7 +15,7 @@ import { ReactionsService } from '../../../services/reactions.service';
 export class AdminComponent implements OnInit {
   constructor(
     private logService: LogService,
-    private postsApiService: PostsApiService,
+    private postService: PostService,
     private userService: UserService,
     private reactionsService: ReactionsService,
     private renderer: Renderer2
@@ -55,7 +55,7 @@ export class AdminComponent implements OnInit {
   }
 
   deleteItem(id: number, type: string): void {
-    this.postsApiService.deleteItem(id, type).subscribe({
+    this.postService.deleteItem(id, type).subscribe({
       next: (data) => {
         console.log('Deleted successfully.', data);
         window.location.reload();
@@ -67,7 +67,7 @@ export class AdminComponent implements OnInit {
   }
 
   getAllData(): void {
-    this.postsApiService.getPosts().subscribe({
+    this.postService.getPosts().subscribe({
       next: (data) => {
         this.posts = data;
       },
@@ -76,7 +76,7 @@ export class AdminComponent implements OnInit {
       },
     });
 
-    this.postsApiService.getCategories().subscribe({
+    this.postService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
       },

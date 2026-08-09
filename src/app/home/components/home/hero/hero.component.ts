@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PostsApiService } from '../../../../services/post.service';
+import { PostService } from '../../../../services/post.service';
 import { IPost } from '../../../../interfaces/i-post';
 
 @Component({
@@ -8,7 +8,7 @@ import { IPost } from '../../../../interfaces/i-post';
   styleUrl: './hero.component.css'
 })
 export class HeroComponent implements OnInit {
-  constructor(public postsApiService: PostsApiService) { }
+  constructor(public postService: PostService) { }
 
 
   latestPosts: IPost[] = []
@@ -18,7 +18,7 @@ export class HeroComponent implements OnInit {
   }
 
   getLatestPosts(): void {
-    this.postsApiService.getLatestPosts().subscribe({
+    this.postService.getLatestPosts().subscribe({
       next: (posts: IPost[]) => {
         this.latestPosts = posts;
       },

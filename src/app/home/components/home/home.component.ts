@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PostsApiService } from '../../../services/post.service';
+import { PostService } from '../../../services/post.service';
 import { UserService } from '../../../services/user.service';
 import { IUser } from '../../../interfaces/i-user';
 import { IPost } from '../../../interfaces/i-post';
@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   posts: any[] = []
 
-  constructor(private postsApiService: PostsApiService, private userService: UserService) { }
+  constructor(private postService: PostService, private userService: UserService) { }
 
   users: IUser[] = []
   allUsers: number = 0
@@ -24,19 +24,19 @@ export class HomeComponent implements OnInit {
   }
 
   getAllData(): void {
-    this.postsApiService.getPosts().subscribe(data => {
+    this.postService.getPosts().subscribe(data => {
       this.posts = data;
     })
 
-    this.userService.getUsers().subscribe({
-      next: (data) => {
-        this.users = data;
-        this.allUsers = this.users.length
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+    //   this.userService.getUsers().subscribe({
+    //     next: (data) => {
+    //       this.users = data;
+    //       this.allUsers = this.users.length
+    //     },
+    //     error: (err) => {
+    //       console.log(err);
+    //     }
+    //   })
   }
 
 }

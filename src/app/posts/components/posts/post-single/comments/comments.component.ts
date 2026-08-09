@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReactionsService } from '../../../../../services/reactions.service';
 import { ActivatedRoute } from '@angular/router';
-import { PostsApiService } from '../../../../../services/post.service';
+import { PostService } from '../../../../../services/post.service';
 import { CommentsService } from '../../../../../services/comments.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class CommentsComponent implements OnInit {
   activeMenuCommentId: number | null = null;
   reaction: any;
 
-  constructor(private reactionsService: ReactionsService, private postsApiService: PostsApiService, private activatedRoute: ActivatedRoute, private commentsService: CommentsService) { }
+  constructor(private reactionsService: ReactionsService, private activatedRoute: ActivatedRoute, private commentsService: CommentsService) { }
 
 
   ngOnInit() {

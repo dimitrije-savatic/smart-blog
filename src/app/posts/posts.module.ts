@@ -10,6 +10,7 @@ import { CommentsComponent } from './components/posts/post-single/comments/comme
 import { NgIconsModule } from '@ng-icons/core';
 import { heroFaceFrown, heroFaceSmile, heroFire, heroHandThumbUp, heroHeart, heroChatBubbleLeftRight, heroEye, heroArrowRight } from '@ng-icons/heroicons/outline';
 import { heroFaceFrownSolid, heroFaceSmileSolid, heroFireSolid, heroHandThumbUpSolid, heroHeartSolid } from '@ng-icons/heroicons/solid';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { heroFaceFrownSolid, heroFaceSmileSolid, heroFireSolid, heroHandThumbUpS
       heroChatBubbleLeftRight,
       heroEye,
       heroArrowRight
-    })
+    }),
+    FormsModule
   ]
 })
 export class PostsModule { }

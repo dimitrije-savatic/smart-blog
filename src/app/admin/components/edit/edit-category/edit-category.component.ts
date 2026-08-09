@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PostsApiService } from '../../../../services/post.service';
+import { PostService } from '../../../../services/post.service';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../../../../services/notification.service';
 
@@ -21,7 +21,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   constructor(
-    private postsApiService: PostsApiService,
+    private postService: PostService,
     private activatedRoute: ActivatedRoute,
     private notificationService: NotificationService
   ) { }
@@ -41,7 +41,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   getCategory(id: number): void {
-    this.postsApiService.getSingleCategory(id).subscribe({
+    this.postService.getSingleCategory(id).subscribe({
       next: (data) => {
         this.formEditCategory.patchValue({ name: data.name })
         this.category = data;
@@ -53,7 +53,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   updateCategory(id: number, name: string): void {
-    this.postsApiService.updateCategory({ name }, this.categoryId).subscribe({
+    this.postService.updateCategory({ name }, this.categoryId).subscribe({
       next: (data) => {
         this.notificationService.show('Category updated successfully.', 'success');
       },

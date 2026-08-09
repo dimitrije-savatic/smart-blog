@@ -1,12 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { PostsApiService } from '../../../../services/post.service';
+
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
   styleUrl: './news.component.css'
 })
 export class NewsComponent implements OnChanges {
-  constructor(public postsApiService: PostsApiService) { }
+  constructor() { }
 
   @Input() posts!: any[]
   lastSevenPosts: any[] = []
