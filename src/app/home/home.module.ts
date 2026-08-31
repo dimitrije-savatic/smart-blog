@@ -35,7 +35,7 @@ import { heroChatBubbleLeftRight, heroHeart, heroUser, heroEye, heroArrowRight }
       heroUser,
       heroChatBubbleLeftRight,
       heroEye,
-      heroArrowRight
+      heroArrowRight,
     })
   ]
 })

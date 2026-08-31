@@ -7,7 +7,7 @@
   <h1 class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">{{post.title}}
   </h1>
   <p class="leading-relaxed mb-3">{{post.body.substring(0,150)}}...</p>
-  <a class="text-green-500 inline-flex items-center" routerLink="/posts/post/{{post.id}}">Learn More
+  <a class="text-green-500 inline-flex items-center" routerLink="/posts/{{post.id}}">Learn More
     <ng-icon [name]="'heroArrowRight'" class="ml-2"></ng-icon>
   </a>
   <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">

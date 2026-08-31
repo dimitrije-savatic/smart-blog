@@ -1,15 +1,14 @@
 <section class="text-gray-600 body-font overflow-hidden border-b">
-  <div class="flex flex-col text-center w-full mb-20">
+  <div class="flex flex-col text-center w-full">
     <h1 class="text-3xl font-medium title-font text-gray-900 mb-4 text-center">
       Most Famous Stories
     </h1>
     <p class="lg:w-2/3 mx-auto leading-relaxed text-base">{{description}}</p>
   </div>
-  <div class="container px-5 py-5 mx-auto">
-    <div class="-my-8 divide-y-2 divide-gray-100">
-      @for (post of lastSevenPosts; track post.id) {
-      <app-news-block [post]="post" class="py-8 flex flex-wrap md:flex-nowrap odd:bg-gray-100"></app-news-block>
-      }
+  <div class="container px-5 py-24 mx-auto">
+    <div class="grid grid-cols-2 gap-8">
+      <app-news-block *ngFor="let post of lastSevenPosts" [post]="post"
+        class="py-8 px-4 border-2 rounded-lg border-gray-100"></app-news-block>
     </div>
   </div>
 </section>

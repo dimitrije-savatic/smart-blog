@@ -10,6 +10,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AdminLayoutModule } from './admin/admin-layout/admin-layout.module';
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "./auth.interceptor";
+import { NgIconsModule } from '@ng-icons/core';
+import { heroArrowLeft } from '@ng-icons/heroicons/outline';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,10 @@ import { AuthInterceptor } from "./auth.interceptor";
     LayoutModule,
     HttpClientModule,
     SharedModule,
-    AdminLayoutModule
+    AdminLayoutModule,
+    NgIconsModule.withIcons({
+      heroArrowLeft
+    })
   ],
   providers: [
     provideAnimationsAsync(),

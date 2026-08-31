@@ -1,4 +1,4 @@
-<div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+<!-- <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
   @for (cat of post.categories; track cat.id) {
   <span class="font-semibold title-font text-gray-700 ml-4">{{cat.name | capitalize}}</span>
   }
@@ -16,4 +16,53 @@
       <path d="M12 5l7 7-7 7"></path>
     </svg>
   </a>
+</div> -->
+
+<!-- <div class="h-full flex items-start">
+  <div class="w-12 flex-shrink-0 flex flex-col text-center leading-none">
+    <span class="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">Jul</span>
+    <span class="font-medium text-lg text-gray-800 title-font leading-none">18</span>
+  </div>
+  <div class="flex-grow pl-6">
+    <h2 class="tracking-widest text-xs title-font font-medium text-green-500 mb-1">CATEGORY</h2>
+    <h1 class="title-font text-xl font-medium text-gray-900 mb-3">The 400 Blows</h1>
+    <p class="leading-relaxed mb-5">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing microdosing tousled
+      waistcoat.</p>
+    <a class="inline-flex items-center">
+      <img alt="blog" src="https://dummyimage.com/103x103"
+        class="w-8 h-8 rounded-full flex-shrink-0 object-cover object-center">
+      <span class="flex-grow flex flex-col pl-3">
+        <span class="title-font font-medium text-gray-900">Alper Kamu</span>
+      </span>
+    </a>
+  </div>
+</div> -->
+
+@for (cat of post.categories; track cat.id) {
+<span
+  class="inline-block py-1 px-2 last:mr-0 mr-3 rounded bg-green-50 text-green-500 text-xs font-medium tracking-widest">
+  {{ cat.name | uppercase }}
+</span>
+}
+<h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">{{ post.title }}</h2>
+<p class="leading-relaxed mb-8">{{ post.body }}</p>
+<div class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full">
+  <a class="text-green-500 inline-flex items-center" [routerLink]="'../posts/' + post.id">Learn More
+    <ng-icon [name]="'heroArrowRight'" class="ml-1"></ng-icon>
+  </a>
+  <span
+    class="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+    <ng-icon [name]="'heroEye'" class="mr-1" size="16"></ng-icon>{{post.views_count}}
+  </span>
+  <span class="text-gray-400 inline-flex items-center leading-none text-sm">
+    <ng-icon [name]="'heroChatBubbleLeftRight'" class="mr-1" size="16"></ng-icon>{{post.comments_count}}
+  </span>
+</div>
+<div class="inline-flex items-center">
+  <ng-icon [name]="'heroUser'" size="32"
+    class="rounded-full flex-shrink-0 object-cover object-center text-green-500"></ng-icon>
+  <span class="flex-grow flex flex-col pl-4">
+    <span class="title-font font-medium text-gray-900">{{post.author?.username}}</span>
+    <span class="text-gray-400 text-xs tracking-widest mt-0.5">{{post.author?.email}}</span>
+  </span>
 </div>

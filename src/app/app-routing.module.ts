@@ -35,10 +35,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('./posts/posts.module').then((m) => m.PostsModule),
       },
-      {
-        path: '**',
-        component: PageNotFoundComponent,
-      },
     ],
   },
   {
@@ -52,6 +48,10 @@ const routes: Routes = [
           import('./admin/admin.module').then((m) => m.AdminModule),
       },
     ],
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
   },
 ];
 
