@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IUser } from "../interfaces/i-user";
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,28 +22,6 @@ export class UserService {
 
   getSingleUser(id: number): Observable<IUser> {
     return this.http.get<IUser>(this.apiUrl + '/' + id);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
-  getUser(): any {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
-  }
-
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
-
-  isAdmin(): boolean {
-    const user = this.getUser();
-    if (user.role_id == 1) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
 }

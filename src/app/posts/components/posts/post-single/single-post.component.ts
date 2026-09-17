@@ -43,8 +43,10 @@ export class SinglePostComponent implements OnInit {
           this.currentReaction = 'happy'
         } else if (this.users_reaction.sad) {
           this.currentReaction = 'sad'
-        } else {
+        } else if (this.users_reaction.fire) {
           this.currentReaction = 'fire'
+        } else {
+          this.currentReaction = ''
         }
       },
       error: (err) => {

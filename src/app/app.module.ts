@@ -11,7 +11,7 @@ import { AdminLayoutModule } from './admin/admin-layout/admin-layout.module';
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "./auth.interceptor";
 import { NgIconsModule } from '@ng-icons/core';
-import { heroArrowLeft } from '@ng-icons/heroicons/outline';
+import { heroArrowLeft, heroUser } from '@ng-icons/heroicons/outline';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { heroArrowLeft } from '@ng-icons/heroicons/outline';
     SharedModule,
     AdminLayoutModule,
     NgIconsModule.withIcons({
-      heroArrowLeft
+      heroArrowLeft,
+      heroUser
     })
   ],
   providers: [

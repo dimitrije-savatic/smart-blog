@@ -11,14 +11,15 @@ const routes: Routes = [
     component: PostsComponent
   },
   {
-    path: ":id",
-    component: SinglePostComponent
-  },
-  {
     path: "create",
     canActivate: [PostGuard],
     component: CreatePostComponent
+  },
+  {
+    path: ":id",
+    component: SinglePostComponent
   }
+
 ];
 
 @NgModule({

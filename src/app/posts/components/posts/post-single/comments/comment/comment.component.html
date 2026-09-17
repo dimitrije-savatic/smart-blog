@@ -1,0 +1,83 @@
+<div class="flex gap-3 p-4 border-b border-green-200">
+
+    <!-- Avatar -->
+    <div class="flex-shrink-0">
+        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+            <ng-icon [name]="'heroUser'" size="24" class="text-gray-500"></ng-icon>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 min-w-0">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <span class="font-semibold text-gray-900">
+                {{ comment.author?.first_name }}
+                {{ comment.author?.last_name }}
+            </span>
+
+            <div class="flex">
+                <button type="button" class="text-sm text-gray-500 hover:text-green-600 mr-2"
+                    (click)="showReply = !showReply">
+                    Reply
+                </button>
+
+                <!-- Heart Reaction -->
+                <button type="button"
+                    class="p-1.5 rounded-full text-gray-500 hover:text-red-500 hover:bg-red-50 transition block"
+                    title="React">
+                    <ng-icon [name]="comment?.users_reaction ? 'heroHeartSolid' : 'heroHeart'"
+                        class="cursor-pointer text-red-700" size="24"
+                        (click)="addReaction(comment?.id, parsedUser?.id, 'comment', 'heart')"></ng-icon>
+                </button>
+
+                @if (parsedUser?.id == comment.author?.id || parsedUser?.role_id == 1) {
+                <!-- Three Dots Menu -->
+                <div class="relative">
+
+                    <button type="button" class="p-1.5 rounded-full text-gray-600 hover:bg-gray-100 transition"
+                        title="More options" (click)="toggleMenu(comment.id)">
+                        <ng-icon [name]="'heroEllipsisVertical'" size="24"></ng-icon>
+                    </button>
+
+                    <!-- Dropdown -->
+                    <div *ngIf="activeMenuCommentId == comment.id"
+                        class="absolute right-0 top-9 z-10 w-32 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                        <button type="button"
+                            class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition"
+                            (click)="removeComment(comment.id)">
+                            Delete
+                        </button>
+                    </div>
+
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- Body -->
+        <p class="mt-1 text-gray-700 leading-relaxed">
+            {{ comment.body }}
+        </p>
+
+        <!-- Reply form -->
+        @if (showReply) {
+        <div class="mt-3">
+            <app-comment-input [postId]="postId" [parentId]="comment.id"
+                (getCategoriesByPostEmit)="getCategoriesByPostEmit">
+            </app-comment-input>
+        </div>
+        }
+
+    </div>
+</div>
+
+<!-- Replies -->
+@if (comment.replies?.length) {
+<div class="ml-8 border-l border-green-200">
+    @for (reply of comment.replies; track reply.id) {
+    <app-comment [comment]="reply" [postId]="postId" />
+    }
+</div>
+}

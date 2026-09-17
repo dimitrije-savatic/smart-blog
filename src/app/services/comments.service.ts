@@ -19,4 +19,8 @@ export class CommentsService {
     return this.http.post(this.commentsUrl, credentials)
   }
 
+  removeComment(commentId: number): Observable<any> {
+    return this.http.delete(this.commentsUrl + '/' + commentId)
+  }
+
 }

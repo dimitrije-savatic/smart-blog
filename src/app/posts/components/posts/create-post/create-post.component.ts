@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../../../services/post.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { NotificationService } from '../../../../services/notification.service';
+import { AuthService } from '../../../../services/auth.service';
+import { IUser } from '../../../../interfaces/i-user';
 
 @Component({
   selector: 'app-create-post',
@@ -9,11 +11,13 @@ import { NotificationService } from '../../../../services/notification.service';
   styleUrl: './create-post.component.css'
 })
 export class CreatePostComponent implements OnInit {
-  userId: number = 0;
+  user: IUser
   categories: any;
+  successMessage: string = "Post created successfully."
 
-  constructor(private postService: PostService, private notificationService: NotificationService) {
-    this.getUserId();
+
+  constructor(private postService: PostService, private notificationService: NotificationService, private authService: AuthService) {
+    this.user = this.authService.getUser()
   }
 
   ngOnInit(): void {
@@ -21,20 +25,16 @@ export class CreatePostComponent implements OnInit {
     this.getCategories();
   }
 
-  getUserId() {
-    const userString = localStorage.getItem('user');
-    if (userString) {
-      const user = JSON.parse(userString);
-      this.userId = user.id;
-    } else {
-      console.log('User not found in local storage');
-    }
-  }
-
   getCategories(): void {
     this.postService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
+        this.formCreatePost.setControl(
+          'category',
+          new FormArray(
+            this.categories.map(() => new FormControl(false, { nonNullable: true }))
+          )
+        );
       },
       error: (err) => {
         console.error(err);
@@ -42,15 +42,30 @@ export class CreatePostComponent implements OnInit {
     });
   }
 
-  createPost(title: string, body: string, user_id: number): void {
-    this.postService.createPost({ title, body, user_id }).subscribe({
-      next: (data) => {
-        this.notificationService.show('Post created successfully.', 'success');
+  createPost() {
+    if (this.formCreatePost.invalid) {
+      return;
+    }
+
+    const selectedCategoryIds = this.categories
+      .filter((cat: any, index: any) => this.categoryControls.at(index).value)
+      .map((cat: any) => cat.id);
+
+    const post = {
+      title: this.formCreatePost.value.title,
+      body: this.formCreatePost.value.body,
+      category_ids: selectedCategoryIds,
+      user_id: this.user.id
+    };
+
+    this.postService.createPost(post).subscribe({
+      next: () => {
+        this.formCreatePost.reset();
+        this.notificationService.show(this.successMessage, "success", 2000)
       },
-      error: (err) => {
-        this.notificationService.show(err.error.error?.message, 'error');
-        console.log(err);
-      },
+      error: (error) => {
+        console.error(error);
+      }
     });
   }
 
@@ -61,8 +76,12 @@ export class CreatePostComponent implements OnInit {
       Validators.maxLength(100),
     ]),
     body: new FormControl('', [Validators.required, Validators.minLength(10)]),
-    category: new FormControl('', [Validators.requiredTrue]),
+    category: new FormArray<FormControl<boolean>>([])
   });
+
+  get categoryControls(): FormArray<FormControl<boolean>> {
+    return this.formCreatePost.get('category') as FormArray<FormControl<boolean>>;
+  }
 
   runValidation(formCreate: any): void {
     Object.keys(formCreate.controls).forEach((ctrlName) => {

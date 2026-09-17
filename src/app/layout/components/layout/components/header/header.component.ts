@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../../../services/user.service';
 import { AuthService } from '../../../../../services/auth.service';
-import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +8,7 @@ import { Subscriber } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 
-  user: any
+  user: any = null;
   active: string = 'text-green-500';
   writePostButtonActive: string = 'text-white bg-green-500 border-white';
   loginButtonTitle: string = 'Login'
@@ -19,13 +17,13 @@ export class HeaderComponent implements OnInit {
   appName: string = 'SmartBlog'
   message: string = ""
 
-  constructor(private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    if (this.userService.isLoggedIn()) {
-      this.user = this.userService.getUser();
+    if (this.authService.isAuthenticated()) {
+      this.user = this.authService.getUser();
     } else {
-      console.log('User not logged in.');
+      console.log("User is not logged in.")
     }
   }
 
@@ -48,8 +46,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logout(this.user).subscribe({
       next: (data) => {
         this.message = data
-        localStorage.removeItem('user')
-        localStorage.removeItem('token')
+        this.authService.clearUser();
         window.location.reload()
       },
       error: (err) => {

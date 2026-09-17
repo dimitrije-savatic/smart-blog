@@ -34,17 +34,14 @@
                     </mat-form-field>
                 </div>
                 <div class="relative mb-4">
-                    @for (cat of categories; track cat.id) {
-                    <mat-checkbox color="primary" [formControl]="formCreatePost.get('category')">{{cat.name |
-                        capitalize}}</mat-checkbox>
+                    @for (cat of categories; track cat.id; let i = $index) {
+                    <mat-checkbox color="primary" [formControl]="categoryControls.at(i)">
+                        {{ cat.name | capitalize }}
+                    </mat-checkbox>
                     }
                 </div>
                 <button mat-raised-button color="primary" style="width: 100%" (click)="
-            createPost(
-              formCreatePost.get('title').value,
-              formCreatePost.get('body').value,
-              userId
-            )
+            createPost()
           " [disabled]="formCreatePost.invalid">
                     Submit
                 </button>

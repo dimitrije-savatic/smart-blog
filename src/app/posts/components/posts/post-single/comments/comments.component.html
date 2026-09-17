@@ -7,82 +7,79 @@
     </div>
     <div class="lg:w-full md:w-2/3 mx-auto">
 
-      @for (com of comments; track com){
-      <div class="flex gap-3 p-4 border-b border-green-200">
-        <!-- User Icon -->
-        <div class="flex-shrink-0">
-          <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-            <!-- User icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="w-6 h-6 text-gray-500">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
-            </svg>
-          </div>
-        </div>
+      @for (comment of comments; track comment.id) {
+      <app-comment [comment]="comment" [postId]="postId" [parsedUser]="parsedUser"
+        (getCategoriesByPostEmit)="OnEventEmitt()" />
+      }
+      <form [formGroup]="formCommentGroup">
 
-        <!-- Comment Content -->
-        <div class="flex-1 min-w-0">
+        <div class="flex gap-3 p-4 border-b border-green-200 mt-4">
 
-          <!-- Header -->
-          <div class="flex items-center justify-between">
-
-            <!-- Username -->
-            <span class="font-semibold text-gray-900">
-              {{com.author?.first_name + ' ' + com.author?.last_name}}
-            </span>
-
-            <!-- Actions -->
-            <div class="flex items-center gap-2">
-
-              <!-- Heart Reaction -->
-              <button type="button"
-                class="p-1.5 rounded-full text-gray-500 hover:text-red-500 hover:bg-red-50 transition block"
-                title="React">
-                <ng-icon [name]="com?.users_reaction ? 'heroHeartSolid' : 'heroHeart'"
-                  class="cursor-pointer text-red-700" size="24"
-                  (click)="addReaction(com?.id, parsedUser?.id, 'comment', 'heart')"></ng-icon>
-              </button>
-
-              @if (parsedUser?.id == com.author?.id) {
-              <!-- Three Dots Menu -->
-              <div class="relative">
-
-                <button type="button" class="p-1.5 rounded-full text-gray-500 hover:bg-gray-100 transition"
-                  title="More options" (click)="toggleMenu(com.id)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
-                    <path
-                      d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2Zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2Zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2Z" />
-                  </svg>
-                </button>
-
-                <!-- Dropdown -->
-                <div *ngIf="activeMenuCommentId == com.id"
-                  class="absolute right-0 top-9 z-10 w-32 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-                  <button type="button"
-                    class="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 transition">
-                    Edit
-                  </button>
-
-                  <button type="button"
-                    class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition">
-                    Delete
-                  </button>
-                </div>
-
-              </div>
-              }
+          <!-- User Icon -->
+          <div class="flex-shrink-0">
+            <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+              <ng-icon [name]="'heroUser'" size="24" class="text-gray-500"></ng-icon>
             </div>
           </div>
 
-          <!-- Comment Text -->
-          <p class="mt-1 text-gray-700 leading-relaxed">
-            {{com.body}}
-          </p>
+          <!-- Comment Content -->
+          <div class="flex-1 min-w-0">
 
+            <!-- Header -->
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-gray-900">
+                {{ parsedUser?.first_name + ' ' + parsedUser?.last_name }}
+              </span>
+            </div>
+
+            <!-- Comment Textarea -->
+            <div class="mt-2">
+              <textarea formControlName="body" rows="2" placeholder="Write a comment..." class="w-full resize-none rounded-lg border border-gray-200
+                 bg-gray-50 px-3 py-2 text-sm text-gray-700
+                 placeholder-gray-400 outline-none transition
+                 focus:border-green-400 focus:bg-white
+                 focus:ring-2 focus:ring-green-100"></textarea>
+
+              <!-- Validation -->
+              @if (formCommentGroup.get('body')?.hasError('required') &&
+              formCommentGroup.get('body')?.dirty) {
+              <p class="mt-1 text-sm text-red-600">
+                Content of the comment is required.
+              </p>
+              }
+
+              @if (formCommentGroup.get('body')?.hasError('minlength') &&
+              formCommentGroup.get('body')?.dirty) {
+              <p class="mt-1 text-sm text-red-600">
+                Comment have to be at least 3 characters long.
+              </p>
+              }
+
+              @if (formCommentGroup.get('body')?.hasError('maxlength') &&
+              formCommentGroup.get('body')?.dirty) {
+              <p class="mt-1 text-sm text-red-600">
+                Comment must not be more than 255 characters long.
+              </p>
+              }
+            </div>
+
+            <!-- Submit -->
+            <div class="mt-2 flex justify-end">
+              <button type="button" (click)="postComment(
+            formCommentGroup.get('body')?.value,
+            parsedUser.id,
+            postId
+          )" [disabled]="formCommentGroup.invalid" class="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium
+                 text-white transition hover:bg-green-700
+                 disabled:cursor-not-allowed disabled:opacity-50">
+                Comment
+              </button>
+            </div>
+
+          </div>
         </div>
-      </div>
-      }
+
+      </form>
     </div>
   </div>
 </section>

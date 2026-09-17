@@ -14,7 +14,6 @@ export class NewsComponent implements OnChanges {
   description: string = 'Check out our most famous stories.'
 
   ngOnChanges(): void {
-    console.log('Posts:', this.posts);
     this.lastSevenPosts = this.posts.slice(-8).reverse();
   }
 

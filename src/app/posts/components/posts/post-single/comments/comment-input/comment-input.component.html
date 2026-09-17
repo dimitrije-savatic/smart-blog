@@ -1,0 +1,74 @@
+<form [formGroup]="formCommentGroup">
+
+    <div class="flex gap-3 p-4 border-b border-green-200 mt-4">
+
+        <!-- User Icon -->
+        <div class="flex-shrink-0">
+            <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0
+               3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Comment Content -->
+        <div class="flex-1 min-w-0">
+
+            <!-- Header -->
+            <div class="flex items-center justify-between">
+                <span class="font-semibold text-gray-900">
+                    {{ parsedUser?.first_name + ' ' + parsedUser?.last_name }}
+                </span>
+            </div>
+
+            <!-- Comment Textarea -->
+            <div class="mt-2">
+                <textarea formControlName="body" rows="2" placeholder="Write a comment..." class="w-full resize-none rounded-lg border border-gray-200
+                 bg-gray-50 px-3 py-2 text-sm text-gray-700
+                 placeholder-gray-400 outline-none transition
+                 focus:border-green-400 focus:bg-white
+                 focus:ring-2 focus:ring-green-100"></textarea>
+
+                <!-- Validation -->
+                @if (formCommentGroup.get('body')?.hasError('required') &&
+                formCommentGroup.get('body')?.dirty) {
+                <p class="mt-1 text-sm text-red-600">
+                    Content of the comment is required.
+                </p>
+                }
+
+                @if (formCommentGroup.get('body')?.hasError('minlength') &&
+                formCommentGroup.get('body')?.dirty) {
+                <p class="mt-1 text-sm text-red-600">
+                    Comment have to be at least 3 characters long.
+                </p>
+                }
+
+                @if (formCommentGroup.get('body')?.hasError('maxlength') &&
+                formCommentGroup.get('body')?.dirty) {
+                <p class="mt-1 text-sm text-red-600">
+                    Comment must not be more than 255 characters long.
+                </p>
+                }
+            </div>
+
+            <!-- Submit -->
+            <div class="mt-2 flex justify-end">
+                <button type="button" (click)="postComment(
+            formCommentGroup.get('body')?.value,
+            parsedUser?.id,
+            postId,
+            parentId
+          )" [disabled]="formCommentGroup.invalid" class="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium
+                 text-white transition hover:bg-green-700
+                 disabled:cursor-not-allowed disabled:opacity-50">
+                    Comment
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</form>

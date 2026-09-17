@@ -33,8 +33,7 @@ export class LoginComponent implements OnInit {
   login(email: string, password: string) {
     this.authService.login({ email, password }).subscribe({
       next: (data) => {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        this.authService.setAuth(data.user, data.token);
         window.location.replace('/home');
       },
       error: (err) => {

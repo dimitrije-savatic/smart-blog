@@ -1,7 +1,7 @@
 <div class="container-lg w-full">
   <header class="container-2xl flex flex-wrap justify-between px-5 w-full h-14 text-white body-font bg-emerald-700">
     <div class="flex items-center">
-      @for (link of links; track link.name) {
+      @for (link of links; track link) {
       <a class="text-sm hover:text-gray-900 cursor-pointer mr-2 pr-2" routerLink="{{ link.path }}"
         [routerLinkActive]="active" [routerLinkActiveOptions]="{exact: true}">{{ link.name }}</a>
       }

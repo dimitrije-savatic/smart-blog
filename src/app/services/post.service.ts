@@ -29,11 +29,11 @@ export class PostService {
     return this.http.get<IPost>(this.getPostsUrl + '/' + id, { withCredentials: true });
   }
 
-  createPost(credentials: { title: string, body: string, user_id: number }): Observable<any> {
+  createPost(credentials: { title: string, body: string, user_id: number, category_ids: any }): Observable<any> {
     return this.http.post<any>(this.getPostsUrl, credentials);
   }
 
-  updatePost(credentials: { title: string, body: string, user_id: number, category_ids: number[] }, id: number): Observable<any> {
+  updatePost(credentials: { title: string, body: string, user_id: number, category_ids: any }, id: number): Observable<any> {
     return this.http.put<any>(this.getPostsUrl + '/' + id, credentials);
   }
 

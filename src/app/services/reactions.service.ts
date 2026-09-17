@@ -29,7 +29,7 @@ export class ReactionsService {
     return this.http.get<IComment[]>(this.commentsUrl + '/' + id);
   }
 
-  addComment(credentials: { body: string, user_id: any, post_id: any }): Observable<IComment> {
+  addComment(credentials: { body: string, user_id: number, post_id: number, parent_id?: number | null }): Observable<IComment> {
     return this.http.post<IComment>(this.commentsUrl, credentials)
   }
 
