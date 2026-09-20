@@ -56,9 +56,9 @@ export class AdminComponent implements OnInit {
 
   deleteItem(id: number, type: string): void {
     this.postService.deleteItem(id, type).subscribe({
-      next: (data) => {
-        console.log('Deleted successfully.', data);
-        window.location.reload();
+      next: () => {
+        this.getAllData();
+        this.showModal = false;
       },
       error: (err) => {
         console.error(err);

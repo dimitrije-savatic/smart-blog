@@ -9,27 +9,14 @@ import { NotificationService } from '../../../services/notification.service';
   styleUrl: './create-category.component.css',
 })
 export class CreateCategoryComponent implements OnInit {
-  userId: number = 0;
   categories: any;
 
   constructor(private postService: PostService, private notificationService: NotificationService) {
-    this.getUserId();
   }
 
   ngOnInit(): void {
-    this.runValidation(this.formCreatePost);
     this.runValidation(this.formCreateCategory);
     this.getCategories();
-  }
-
-  getUserId() {
-    const userString = localStorage.getItem('user');
-    if (userString) {
-      const user = JSON.parse(userString);
-      this.userId = user.id;
-    } else {
-      console.log('User not found in local storage');
-    }
   }
 
   getCategories(): void {
@@ -45,7 +32,8 @@ export class CreateCategoryComponent implements OnInit {
 
   createCategory(name: string): void {
     this.postService.createCategories({ name }).subscribe({
-      next: (data) => {
+      next: () => {
+        this.formCreateCategory.reset();
         this.notificationService.show('Category created successfully.', 'success');
       },
       error: (err) => {
@@ -54,16 +42,6 @@ export class CreateCategoryComponent implements OnInit {
       },
     });
   }
-
-  formCreatePost: any = new FormGroup({
-    title: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(100),
-    ]),
-    body: new FormControl('', [Validators.required, Validators.minLength(10)]),
-    category: new FormControl('', [Validators.requiredTrue]),
-  });
 
   formCreateCategory: any = new FormGroup({
     name: new FormControl('', [
