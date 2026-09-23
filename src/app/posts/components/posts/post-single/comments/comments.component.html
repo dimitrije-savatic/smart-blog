@@ -1,4 +1,4 @@
-<section *ngIf="comments?.length > 0" class="text-gray-600 body-font relative border-t">
+<section class="text-gray-600 body-font relative border-t">
   <div class="container px-5 py-12 mx-auto">
     <div class="flex flex-col text-center w-full mb-12">
       <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
@@ -11,7 +11,7 @@
       <app-comment [comment]="comment" [postId]="postId" [parsedUser]="parsedUser"
         (getCategoriesByPostEmit)="OnEventEmitt()" />
       }
-      <form [formGroup]="formCommentGroup">
+      <form [formGroup]="formCommentGroup" *ngIf="parsedUser">
 
         <div class="flex gap-3 p-4 border-b border-green-200 mt-4">
 

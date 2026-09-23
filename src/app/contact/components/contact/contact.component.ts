@@ -33,12 +33,11 @@ export class ContactComponent implements OnInit {
     this.emailService.sendEmail(this.emailForm.value).subscribe({
       next: (data) => {
         this.notificationService.show('Email sent successfully.', 'success');
-        console.log('Email sent successfully', data);
+        this.emailForm.reset();
       },
       error: (err) => {
-        this.notificationService.show(err.error.error?.message, 'error');
+        this.notificationService.show('Sending failed.', 'error');
         console.error(err);
-
       }
     })
   }

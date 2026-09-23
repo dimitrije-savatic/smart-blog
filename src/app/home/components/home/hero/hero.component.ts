@@ -12,6 +12,7 @@ export class HeroComponent implements OnInit {
 
 
   latestPosts: IPost[] = []
+  description: string = "Explore the newest ideas, discoveries, and insights shared by our community.";
 
   ngOnInit(): void {
     this.getLatestPosts();

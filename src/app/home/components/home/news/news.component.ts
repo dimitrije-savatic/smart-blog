@@ -9,12 +9,12 @@ export class NewsComponent implements OnChanges {
   constructor() { }
 
   @Input() posts!: any[]
-  lastSevenPosts: any[] = []
+  lastEightPosts: any[] = []
   newsButtonTitle: string = 'View All'
-  description: string = 'Check out our most famous stories.'
+  description: string = 'Discover the stories that have captured the most attention and sparked the greatest discussions.'
 
   ngOnChanges(): void {
-    this.lastSevenPosts = this.posts.slice(-8).reverse();
+    this.lastEightPosts = this.posts.slice(-8).reverse();
   }
 
 

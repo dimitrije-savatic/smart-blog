@@ -69,7 +69,7 @@ export class EditPostComponent implements OnInit {
     title: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
-      Validators.maxLength(50),
+      Validators.maxLength(100),
     ]),
     body: new FormControl('', [
       Validators.required,

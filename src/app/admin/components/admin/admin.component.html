@@ -6,7 +6,7 @@
         <ng-icon [name]="item.icon" size="24" [className]="item.color"></ng-icon>
       </div>
       <div class="flex flex-col">
-        <p class="text-2xl text-gray-900">{{ item.number }}</p>
+        <p class="text-2xl text-gray-900">{{ item?.number }}</p>
         <p class="text-gray-400">{{ item.name | capitalize }}</p>
       </div>
     </div>

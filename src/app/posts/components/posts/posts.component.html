@@ -69,7 +69,7 @@
       <app-posts-block [post]="post" class="p-4 lg:w-1/3"></app-posts-block>
       }
     </div>
-    <mat-paginator #paginator [pageSize]="perPage" [pageSizeOptions]="[6, 12, 18, 24]" showFirstLastButtons
+    <mat-paginator #paginator [pageSize]="perPage" [pageSizeOptions]="[6, 12, 18]" showFirstLastButtons
       [length]="posts.length" (page)="onPageChange($event)">
     </mat-paginator>
   </div>
