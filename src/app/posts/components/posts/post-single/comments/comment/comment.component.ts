@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommentsService } from '../../../../../../services/comments.service';
 import { ReactionsService } from '../../../../../../services/reactions.service';
+import { NotificationService } from '../../../../../../services/notification.service';
 
 @Component({
   selector: 'app-comment',
@@ -17,7 +18,7 @@ export class CommentComponent {
   @Input() parsedUser!: any
   reaction: any
 
-  constructor(private commentsService: CommentsService, private reactionsService: ReactionsService) { }
+  constructor(private commentsService: CommentsService, private reactionsService: ReactionsService, private notifactionService: NotificationService) { }
 
   toggleMenu(commentId: number): void {
     if (this.activeMenuCommentId === commentId) {
@@ -39,6 +40,10 @@ export class CommentComponent {
   }
 
   addReaction(reactable_id: number, user_id: number, reactable_type: string, type: string): void {
+    if (this.parsedUser == null) {
+      this.notifactionService.show("You must be logged in to react.", "warning", 2000);
+      return;
+    }
     this.reactionsService.addReaction({ reactable_id, user_id, reactable_type, type }).subscribe({
       next: (data) => {
         this.reaction = data;

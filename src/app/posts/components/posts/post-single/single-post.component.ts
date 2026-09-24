@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PostService } from '../../../../services/post.service';
 import { ReactionsService } from '../../../../services/reactions.service';
 import { IComment } from '../../../../interfaces/i-comment';
+import { NotificationService } from '../../../../services/notification.service';
 
 @Component({
   selector: 'app-single-post',
@@ -23,6 +24,7 @@ export class SinglePostComponent implements OnInit {
     private postService: PostService,
     private reactionsService: ReactionsService,
     private activatedRoute: ActivatedRoute,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +58,10 @@ export class SinglePostComponent implements OnInit {
   }
 
   addReaction(reactable_id: number, user_id: number, reactable_type: string, type: string): void {
+    if (this.parsedUser == null) {
+      this.notificationService.show("You must be logged in to react.", "warning", 2000);
+      return;
+    }
     this.reactionsService.addReaction({ reactable_id, user_id, reactable_type, type }).subscribe({
       next: (data) => {
         this.getPost(Number(this.postId));

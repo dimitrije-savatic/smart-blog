@@ -39,35 +39,35 @@
             <ng-icon [name]="currentReaction === 'like' ? 'heroHandThumbUpSolid' : 'heroHandThumbUp'"
               class="cursor-pointer text-green-600 transition-all duration-300 ease-in-out hover:scale-125 hover:-rotate-6 mr-1"
               size="24" (click)="addReaction(post?.id, parsedUser?.id, 'post', 'like')"
-              (click)="changeReaction('like')"></ng-icon>
+              (click)="parsedUser ? changeReaction('like') : ''"></ng-icon>
             <p class="mr-2">{{ post?.reaction_counts?.like ?? 0}}</p>
 
             <!-- HEART -->
             <ng-icon [name]="currentReaction === 'heart' ? 'heroHeartSolid' : 'heroHeart'"
               class="cursor-pointer text-red-700 transition-all duration-300 ease-in-out hover:scale-125 hover:-rotate-6 mr-1"
               size="24" (click)="addReaction(post?.id, parsedUser?.id, 'post', 'heart')"
-              (click)="changeReaction('heart')"></ng-icon>
+              (click)="parsedUser ? changeReaction('heart') : ''"></ng-icon>
             <p class="mr-2">{{ post?.reaction_counts?.heart ?? 0}}</p>
 
             <!-- HAPPY -->
             <ng-icon [name]="currentReaction === 'happy' ? 'heroFaceSmileSolid' : 'heroFaceSmile'"
               class="cursor-pointer text-amber-400 transition-all duration-300 ease-in-out hover:scale-125 hover:-rotate-6 mr-1"
               size="24" (click)="addReaction(post?.id, parsedUser?.id, 'post', 'happy')"
-              (click)="changeReaction('happy')"></ng-icon>
+              (click)="parsedUser ? changeReaction('happy') : ''"></ng-icon>
             <p class="mr-2">{{ post?.reaction_counts?.happy ?? 0}}</p>
 
             <!-- SAD -->
             <ng-icon [name]="currentReaction === 'sad' ? 'heroFaceFrownSolid' : 'heroFaceFrown'"
               class="cursor-pointer text-indigo-400 transition-all duration-300 ease-in-out hover:scale-125 hover:-rotate-6 mr-1"
               size="24" (click)="addReaction(post?.id, parsedUser?.id, 'post', 'sad')"
-              (click)="changeReaction('sad')"></ng-icon>
+              (click)="parsedUser ? changeReaction('sad') : ''"></ng-icon>
             <p class="mr-2">{{ post?.reaction_counts?.sad ?? 0}}</p>
 
             <!-- FIRE -->
             <ng-icon [name]="currentReaction === 'fire' ? 'heroFireSolid' : 'heroFire'"
               class="cursor-pointer text-orange-500 transition-all duration-300 ease-in-out hover:scale-125 hover:-rotate-6 mr-1"
               size="24" (click)="addReaction(post?.id, parsedUser?.id, 'post', 'fire')"
-              (click)="changeReaction('fire')"></ng-icon>
+              (click)="parsedUser ? changeReaction('fire') : ''"></ng-icon>
             <p class="mr-2">{{ post?.reaction_counts?.fire ?? 0}}</p>
 
           </div>
