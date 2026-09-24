@@ -8,8 +8,8 @@
     <div class="lg:w-full md:w-2/3 mx-auto">
 
       @for (comment of comments; track comment.id) {
-      <app-comment [comment]="comment" [postId]="postId" [parsedUser]="parsedUser"
-        (getCategoriesByPostEmit)="OnEventEmitt()" />
+      <app-comment [comment]="comment" [postId]="postId" [parsedUser]="parsedUser" [author]="comment?.author"
+        (getCommentsByPostEmit)="OnEventEmitt()" />
       }
       <form [formGroup]="formCommentGroup" *ngIf="parsedUser">
 

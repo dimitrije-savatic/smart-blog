@@ -16,6 +16,7 @@ export class CommentsComponent implements OnInit {
   postId = Number(this.activatedRoute.snapshot.paramMap.get('id'))
   userFromLocalStorage: any = localStorage.getItem('user');
   parsedUser: any = JSON.parse(this.userFromLocalStorage);
+  author: any;
   activeMenuCommentId: number | null = null;
   reaction: any;
   buttonName: string = "Comment";
@@ -26,6 +27,7 @@ export class CommentsComponent implements OnInit {
   ngOnInit() {
     this.getCommentsByPostId(this.postId)
     this.authService.runValidation(this.formCommentGroup);
+
   }
 
   OnEventEmitt(): void {

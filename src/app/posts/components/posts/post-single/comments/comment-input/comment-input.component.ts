@@ -11,7 +11,7 @@ export class CommentInputComponent {
 
   @Input() postId!: number;
   @Input() parentId: number | null = null;
-  @Output() getCategoriesByPostEmit = new EventEmitter<number>();
+  @Output() getCommentsByPostEmit = new EventEmitter<number>();
   userFromLocalStorage: any = localStorage.getItem('user');
   parsedUser: any = JSON.parse(this.userFromLocalStorage);
 
@@ -21,7 +21,7 @@ export class CommentInputComponent {
     this.reactionsService.addComment({ body, user_id, post_id, parent_id }).subscribe({
       next: (data) => {
         this.formCommentGroup.get('body')?.reset();
-        this.getCategoriesByPostEmit.emit();
+        this.getCommentsByPostEmit.emit();
       },
       error: (err) => {
         console.error(err);

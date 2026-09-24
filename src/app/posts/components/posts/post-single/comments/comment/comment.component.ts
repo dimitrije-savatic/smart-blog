@@ -12,9 +12,10 @@ export class CommentComponent {
 
   @Input() comment!: any
   @Input() postId!: number
+  @Input() author!: any
   activeMenuCommentId: number | null = null;
   showReply = false;
-  @Output() getCategoriesByPostEmit = new EventEmitter<number>();
+  @Output() getCommentsByPostEmit = new EventEmitter<number>();
   @Input() parsedUser!: any
   reaction: any
 
@@ -31,7 +32,7 @@ export class CommentComponent {
   removeComment(commentId: number): void {
     this.commentsService.removeComment(commentId).subscribe({
       next: (data) => {
-        this.getCategoriesByPostEmit.emit();
+        this.getCommentsByPostEmit.emit();
       },
       error: (err) => {
         console.log(err);
@@ -47,7 +48,7 @@ export class CommentComponent {
     this.reactionsService.addReaction({ reactable_id, user_id, reactable_type, type }).subscribe({
       next: (data) => {
         this.reaction = data;
-        this.getCategoriesByPostEmit.emit();
+        this.getCommentsByPostEmit.emit();
       },
       error: (err) => {
         console.error(err);
